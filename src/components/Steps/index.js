@@ -88,7 +88,7 @@ const StepExampleGroup = ({
           <Step disabled>
             <div className='link  step' style={{ height: '70%' }}>
               <div style={{ width: '60px', marginRight: '20px' }}>
-                <Img src={require('../../images/nft.png')} alt='Logo' />
+                <Img src={require('../../images/icon.png')} alt='Logo' />
               </div>
               <div style={{ flexDirection: 'column' }}>
                 <Step.Content>

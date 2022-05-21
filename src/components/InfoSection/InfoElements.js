@@ -12,7 +12,7 @@ export const InfoContainer = styled.div`
 export const InfoWrapper = styled.div`
   display: grid;
   z-index: 1;
-  height: ${({ small }) => (small ? '700px' : '860px')};
+  height: ${({ small }) => (small ? '720px' : '860px')};
   width: 100%;
   max-width: 1100px;
   margin-right: auto;
@@ -89,8 +89,12 @@ export const BtnWrap = styled.div`
 `;
 
 export const ImgWrap = styled.div`
-  max-width: 555px;
+  max-width: 500px;
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    max-width: 350px;
+  }
 `;
 
 export const Img = styled.img`

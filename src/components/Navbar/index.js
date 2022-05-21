@@ -15,7 +15,7 @@ import {
   MetaMaskbtn,
 } from './NavbarElements';
 
-const Navbar = ({ toggle, connect }) => {
+const Navbar = ({ toggle, connect, address }) => {
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -99,7 +99,11 @@ const Navbar = ({ toggle, connect }) => {
               </NavItem>
             </NavMenu>
             <NavBtn onClick={connect}>
-              <MetaMaskbtn>Connect to MetaMask</MetaMaskbtn>
+              {address ? (
+                <MetaMaskbtn>{address.substring(1, 12)}...</MetaMaskbtn>
+              ) : (
+                <MetaMaskbtn>Connect to MetaMask</MetaMaskbtn>
+              )}
             </NavBtn>
           </NavbarContainer>
         </Nav>

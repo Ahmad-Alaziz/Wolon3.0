@@ -1,5 +1,6 @@
 import React from 'react';
 import { animateScroll as scroll } from 'react-scroll';
+import { Img } from '../InfoSection/InfoElements';
 import {
   FooterContainer,
   FooterWrap,
@@ -19,7 +20,12 @@ const Footer = () => {
         <SocialMedia>
           <SocialMediaWrap>
             <SocialLogo to='/' onClick={toggleHome}>
-              Wolon<sup> 3.0</sup>
+              <div style={{ width: '120px', marginRight: '20px' }}>
+                <Img
+                  src={require('../../images/logo-text-white.png')}
+                  alt='Logo'
+                />
+              </div>{' '}
             </SocialLogo>
             <WebsiteRights>
               Wolon<sup> 3.0</sup> © 2022 All rights reserved.

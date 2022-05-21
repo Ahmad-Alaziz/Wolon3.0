@@ -7,7 +7,7 @@ export const sectionOne = {
   headline: 'Post help requests and receive help of all kinds.',
   description:
     'Using Superfluid, our helpseeker can pay for the request adverts using a continious cash-flow. Allowing them to pay for the time of service and not a second more! ',
-  buttonLabel: 'Get Started',
+  buttonLabel: 'Sign Up!',
   imgStart: false,
   alt: 'getHelp',
   dark: true,
@@ -25,7 +25,7 @@ export const sectionTwo = {
   headline:
     'Become a Volunteer and help out those in need. Collect Tokens and Earn Money ',
   description: 'Find help-seekers. Offer your help and receive rewards.',
-  buttonLabel: 'Learn More',
+  buttonLabel: 'Sign Up!',
   imgStart: true,
   alt: 'giveHelp',
   dark: false,
@@ -36,7 +36,7 @@ export const sectionTwo = {
 };
 
 export const sectionThree = {
-  id: 'discover',
+  id: 'discover2',
   lightBg: true,
   lightText: false,
   lightTextDesc: false,
@@ -52,13 +52,12 @@ export const sectionThree = {
   primary: true,
   darkText: true,
   lottie: require('../../lotties/crypto.json'),
-  lottieWidth: 400,
   noButton: true,
   small: true,
 };
 
 export const sectionFour = {
-  id: 'discover',
+  id: 'discover3',
   lightBg: true,
   lightText: false,
   lightTextDesc: false,
@@ -73,25 +72,14 @@ export const sectionFour = {
   primary: true,
   darkText: true,
   lottie: require('../../lotties/vote.json'),
-  lottieWidth: 400,
   noButton: true,
   small: true,
 };
 
 export const sectionFive = {
   id: 'signup',
-  lightBg: true,
-  lightText: false,
-  lightTextDesc: false,
   topLine: 'Join our Team',
   headline: 'Creating an account is easy',
   description: 'Get everything set up and ready in 3 simple steps!',
-  imgStart: true,
   img: require('../../images/papers.png'),
-  alt: 'Papers',
-  dark: false,
-  primary: false,
-  darkText: true,
-  steps: true,
-  noButton: true,
 };

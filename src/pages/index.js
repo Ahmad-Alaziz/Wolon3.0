@@ -91,7 +91,7 @@ function Home() {
   return (
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
-      <Navbar toggle={toggle} connect={connect} />
+      <Navbar toggle={toggle} connect={connect} address={address} />
       <HeroSection />
       <InfoSection {...sectionOne} />
       <InfoSection {...sectionTwo} />

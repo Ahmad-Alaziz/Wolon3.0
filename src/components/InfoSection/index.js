@@ -34,8 +34,6 @@ const InfoSection = ({
   dark,
   dark2,
   lottie = false,
-  lottieHeight = 500,
-  lottieWidth = 500,
   noButton = false,
   small = false,
   steps = false,
@@ -63,7 +61,7 @@ const InfoSection = ({
                 {!noButton && (
                   <BtnWrap>
                     <Button
-                      to='home'
+                      to='signup'
                       smooth={true}
                       duration={500}
                       spy={true}
@@ -82,11 +80,7 @@ const InfoSection = ({
             <Column2>
               <ImgWrap>
                 {lottie ? (
-                  <Lottie
-                    options={defaultOptions}
-                    height={lottieHeight}
-                    width={lottieWidth}
-                  />
+                  <Lottie options={defaultOptions} />
                 ) : svg ? (
                   <Img src={img} alt={alt} />
                 ) : (
