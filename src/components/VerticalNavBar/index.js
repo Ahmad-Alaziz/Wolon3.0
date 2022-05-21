@@ -5,6 +5,7 @@ import {
   FaPaperPlane,
   FaRegComments,
   FaTachometerAlt,
+  FaCompress,
 } from 'react-icons/fa';
 
 import {
@@ -19,19 +20,41 @@ import {
 import 'react-pro-sidebar/dist/css/styles.css';
 import { WebsiteRights } from '../Footer/FooterElements';
 import { Img } from '../InfoSection/InfoElements';
-import { NavLogo } from '../Navbar/NavbarElements';
+import { NavLogo, NavLinks } from '../Navbar/NavbarElements';
 
 import { Link } from 'react-router-dom';
 
 import './index.scss';
 
-const VerticalNavbar = ({ collapsed, toggled }) => {
+const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
   return (
     <ProSidebar collapsed={collapsed} toggled={toggled}>
       <SidebarHeader>
-        <NavLogo to='/dapp'>
-          <Img src={require('../../images/logo-text-white.png')} alt='Logo' />
-        </NavLogo>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '10px',
+            paddingRight: '20px',
+          }}
+        >
+          {!collapsed && (
+            <NavLogo to='/dapp'>
+              <Img
+                src={require('../../images/logo-text-white.png')}
+                alt='Logo'
+              />
+            </NavLogo>
+          )}
+          <NavLinks onClick={() => handleCollapse(!collapsed)}>
+            <FaCompress />
+          </NavLinks>
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <Menu>
@@ -61,13 +84,16 @@ const VerticalNavbar = ({ collapsed, toggled }) => {
           </MenuItem>
         </Menu>
       </SidebarContent>
-      <SidebarFooter>
-        <div style={{ margin: '20px' }}>
-          <WebsiteRights>
-            Wolon<sup> 3.0</sup> © 2022 All rights reserved.
-          </WebsiteRights>
-        </div>
-      </SidebarFooter>
+
+      {!collapsed && (
+        <SidebarFooter>
+          <div style={{ margin: '20px' }}>
+            <WebsiteRights>
+              Wolon<sup> 3.0</sup> © 2022 All rights reserved.
+            </WebsiteRights>
+          </div>
+        </SidebarFooter>
+      )}
     </ProSidebar>
   );
 };

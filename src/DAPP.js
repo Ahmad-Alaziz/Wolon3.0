@@ -12,7 +12,11 @@ const DAPP = () => {
 
   return (
     <div className={`app`}>
-      <VerticalNavbar collapsed={collapsed} toggled={true} />
+      <VerticalNavbar
+        collapsed={collapsed}
+        toggled={true}
+        handleCollapse={handleCollapsedChange}
+      />
       <Routes>
         <Route index element={<Dashboard />} />
         <Route path='help' element={<Dashboard />} />
