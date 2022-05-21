@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Step } from 'semantic-ui-react';
 import './index.css';
 import {
@@ -14,6 +14,7 @@ import {
   TextWrapper,
   TopLine,
 } from '../InfoSection/InfoElements';
+import { WorldIDComponent } from '../WorldIDComponent/WorldIDComponent';
 
 const StepExampleGroup = ({
   topLine,
@@ -23,9 +24,10 @@ const StepExampleGroup = ({
   alt,
   connect,
   address,
-}) => (
-  console.log('Address: ', address),
-  (
+}) => {
+  const [worldIDProof, setWorldIDProof] = useState(null);
+
+  return (
     <InfoContainer lightBg={true} id={'signup'}>
       <InfoWrapper>
         <InfoRow imgStart={true}>
@@ -69,23 +71,53 @@ const StepExampleGroup = ({
             </div>
           </Step>
 
-          <Step disabled={address ? false : true}>
-            <div className='link  step' style={{ height: '70%' }}>
-              <div style={{ width: '80px', marginRight: '20px' }}>
-                <Img src={require('../../images/worldcoin.png')} alt='Logo' />
+          <Step disabled={address && !worldIDProof ? false : true}>
+            <div
+              className='step'
+              style={{ height: '90%', flexDirection: 'column', flex: 1 }}
+            >
+              <div
+                style={{
+                  flexDirection: 'row',
+                }}
+              >
+                <Step.Group
+                  style={{
+                    border: 0,
+                    marginBottom: '15px',
+                    marginLeft: '-25px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '80px',
+                      marginRight: '20px',
+                    }}
+                  >
+                    <Img
+                      src={require('../../images/worldcoin.png')}
+                      alt='Logo'
+                    />
+                  </div>
+
+                  <Step.Content>
+                    <Step.Title>WorldCoin</Step.Title>
+                    <Step.Description>
+                      Verify yourself using WorldCoin
+                    </Step.Description>
+                  </Step.Content>
+                </Step.Group>
               </div>
-              <div style={{ flexDirection: 'column' }}>
-                <Step.Content>
-                  <Step.Title>WorldCoin</Step.Title>
-                  <Step.Description>
-                    Verify yourself using WorldCoin
-                  </Step.Description>
-                </Step.Content>
-              </div>
+              {address && (
+                <WorldIDComponent
+                  signal={address}
+                  setProof={(proof) => setWorldIDProof(proof)}
+                />
+              )}
             </div>
           </Step>
 
-          <Step disabled>
+          <Step disabled={worldIDProof ? false : true}>
             <div className='link  step' style={{ height: '70%' }}>
               <div style={{ width: '60px', marginRight: '20px' }}>
                 <Img src={require('../../images/icon.png')} alt='Logo' />
@@ -101,7 +133,7 @@ const StepExampleGroup = ({
         </Step.Group>
       </InfoWrapper>
     </InfoContainer>
-  )
-);
+  );
+};
 
 export default StepExampleGroup;
