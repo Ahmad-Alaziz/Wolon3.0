@@ -1,6 +1,6 @@
-import React from 'react';
-import { Step } from 'semantic-ui-react';
-import './index.css';
+import React, { useState } from "react";
+import { Step } from "semantic-ui-react";
+import "./index.css";
 import {
   Column1,
   Column2,
@@ -13,7 +13,8 @@ import {
   Subtitle,
   TextWrapper,
   TopLine,
-} from '../InfoSection/InfoElements';
+} from "../InfoSection/InfoElements";
+import { WorldIDComponent } from "../WorldIDComponent/WorldIDComponent";
 
 const StepExampleGroup = ({
   topLine,
@@ -23,10 +24,11 @@ const StepExampleGroup = ({
   alt,
   connect,
   address,
-}) => (
-  console.log('Address: ', address),
-  (
-    <InfoContainer lightBg={true} id={'signup'}>
+}) => {
+  const [worldIDProof, setWorldIDProof] = useState(null);
+
+  return (
+    <InfoContainer lightBg={true} id={"signup"}>
       <InfoWrapper>
         <InfoRow imgStart={true}>
           <Column1>
@@ -43,24 +45,24 @@ const StepExampleGroup = ({
           </Column2>
         </InfoRow>
 
-        <Step.Group style={{ marginBottom: '50px' }}>
+        <Step.Group style={{ marginBottom: "50px" }}>
           <Step disabled={!address ? false : true}>
             <div
-              className='link active step '
+              className="link active step "
               onClick={connect}
-              style={{ height: '70%' }}
+              style={{ height: "70%" }}
             >
-              <div style={{ width: '60px', marginRight: '20px' }}>
+              <div style={{ width: "60px", marginRight: "20px" }}>
                 <Img
                   src={
                     address
-                      ? require('../../images/checkMark.png')
-                      : require('../../images/meta.png')
+                      ? require("../../images/checkMark.png")
+                      : require("../../images/meta.png")
                   }
-                  alt='Logo'
+                  alt="Logo"
                 />
               </div>
-              <div style={{ flexDirection: 'column' }}>
+              <div style={{ flexDirection: "column" }}>
                 <Step.Content>
                   <Step.Title>MetaMask</Step.Title>
                   <Step.Description>Connect to MetaMask</Step.Description>
@@ -70,27 +72,33 @@ const StepExampleGroup = ({
           </Step>
 
           <Step disabled={address ? false : true}>
-            <div className='link  step' style={{ height: '70%' }}>
-              <div style={{ width: '80px', marginRight: '20px' }}>
-                <Img src={require('../../images/worldcoin.png')} alt='Logo' />
+            <div className="link  step" style={{ height: "70%" }}>
+              <div style={{ width: "80px", marginRight: "20px" }}>
+                <Img src={require("../../images/worldcoin.png")} alt="Logo" />
               </div>
-              <div style={{ flexDirection: 'column' }}>
+              <div style={{ flexDirection: "column" }}>
                 <Step.Content>
                   <Step.Title>WorldCoin</Step.Title>
-                  <Step.Description>
+                  <Step.Description style={{ marginBottom: "10px" }}>
                     Verify yourself using WorldCoin
                   </Step.Description>
+                  {address && (
+                    <WorldIDComponent
+                      signal={address}
+                      setProof={(proof) => setWorldIDProof(proof)}
+                    />
+                  )}
                 </Step.Content>
               </div>
             </div>
           </Step>
 
-          <Step disabled>
-            <div className='link  step' style={{ height: '70%' }}>
-              <div style={{ width: '60px', marginRight: '20px' }}>
-                <Img src={require('../../images/icon.png')} alt='Logo' />
+          <Step disabled={worldIDProof ? false : true}>
+            <div className="link  step" style={{ height: "70%" }}>
+              <div style={{ width: "60px", marginRight: "20px" }}>
+                <Img src={require("../../images/icon.png")} alt="Logo" />
               </div>
-              <div style={{ flexDirection: 'column' }}>
+              <div style={{ flexDirection: "column" }}>
                 <Step.Content>
                   <Step.Title>NFT</Step.Title>
                   <Step.Description>Mint an NFT</Step.Description>
@@ -101,7 +109,7 @@ const StepExampleGroup = ({
         </Step.Group>
       </InfoWrapper>
     </InfoContainer>
-  )
-);
+  );
+};
 
 export default StepExampleGroup;
