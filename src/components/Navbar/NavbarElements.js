@@ -93,7 +93,7 @@ export const NavLinks = styled(LinkS)`
   }
 `;
 
-export const NavBtnLink = styled(LinkR)`
+export const NavBtnLink = styled.button`
   border-radius: 50px;
   background: #0dcaf4;
   white-space: nowrap;
@@ -113,7 +113,7 @@ export const NavBtnLink = styled(LinkR)`
   }
 `;
 
-export const MetaMaskbtn = styled(LinkR)`
+export const MetaMaskbtn = styled.nav`
   border-radius: 50px;
   background: #f6851b;
   white-space: nowrap;

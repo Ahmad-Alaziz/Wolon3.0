@@ -15,7 +15,7 @@ import {
   MetaMaskbtn,
 } from './NavbarElements';
 
-const Navbar = ({ toggle }) => {
+const Navbar = ({ toggle, connect }) => {
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -98,8 +98,8 @@ const Navbar = ({ toggle }) => {
                 </NavLinks>
               </NavItem>
             </NavMenu>
-            <NavBtn>
-              <MetaMaskbtn to='/signin'>Connect to MetaMask</MetaMaskbtn>
+            <NavBtn onClick={connect}>
+              <MetaMaskbtn>Connect to MetaMask</MetaMaskbtn>
             </NavBtn>
           </NavbarContainer>
         </Nav>

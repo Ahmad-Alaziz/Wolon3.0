@@ -39,6 +39,8 @@ const InfoSection = ({
   noButton = false,
   small = false,
   steps = false,
+  svg,
+  connect,
 }) => {
   const defaultOptions = {
     loop: true,
@@ -85,6 +87,8 @@ const InfoSection = ({
                     height={lottieHeight}
                     width={lottieWidth}
                   />
+                ) : svg ? (
+                  <Img src={img} alt={alt} />
                 ) : (
                   <Img src={img} alt={alt} />
                 )}
@@ -92,7 +96,7 @@ const InfoSection = ({
             </Column2>
           </InfoRow>
 
-          {steps && <Step />}
+          {steps && <Step connect={connect} />}
         </InfoWrapper>
       </InfoContainer>
     </>
