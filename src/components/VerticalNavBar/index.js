@@ -1,11 +1,12 @@
 import {
-  FaGem,
   FaHeart,
   FaHandsHelping,
   FaVoteYea,
   FaPaperPlane,
   FaRegComments,
+  FaTachometerAlt,
 } from 'react-icons/fa';
+
 import {
   ProSidebar,
   Menu,
@@ -14,29 +15,50 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from 'react-pro-sidebar';
+
 import 'react-pro-sidebar/dist/css/styles.css';
 import { WebsiteRights } from '../Footer/FooterElements';
 import { Img } from '../InfoSection/InfoElements';
 import { NavLogo } from '../Navbar/NavbarElements';
 
+import { Link } from 'react-router-dom';
+
 import './index.scss';
 
-const VerticalNavbar = () => {
+const VerticalNavbar = ({ collapsed, toggled }) => {
   return (
-    <ProSidebar>
+    <ProSidebar collapsed={collapsed} toggled={toggled}>
       <SidebarHeader>
-        <NavLogo to='/'>
+        <NavLogo to='/dapp'>
           <Img src={require('../../images/logo-text-white.png')} alt='Logo' />
         </NavLogo>
       </SidebarHeader>
       <SidebarContent>
         <Menu>
-          <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
-          <MenuItem icon={<FaHeart />}>Help Others</MenuItem>
-          <MenuItem icon={<FaPaperPlane />}>messages</MenuItem>
-          <MenuItem icon={<FaRegComments />}>Chat Room</MenuItem>
-          <MenuItem icon={<FaVoteYea />}>Voting Hub</MenuItem>
-          <MenuItem icon={<FaHandsHelping />}>Support Us</MenuItem>
+          <MenuItem icon={<FaTachometerAlt />}>
+            Dashboard
+            <Link to='/dapp' />
+          </MenuItem>
+          <MenuItem icon={<FaHeart />}>
+            Help Others
+            <Link to='/dapp/help' />
+          </MenuItem>
+          <MenuItem icon={<FaPaperPlane />}>
+            messages
+            <Link to='/dapp/messages' />
+          </MenuItem>
+          <MenuItem icon={<FaRegComments />}>
+            Chat Room
+            <Link to='/dapp/chat' />
+          </MenuItem>
+          <MenuItem icon={<FaVoteYea />}>
+            Voting Hub
+            <Link to='/dapp/vote' />
+          </MenuItem>
+          <MenuItem icon={<FaHandsHelping />}>
+            Support Us
+            <Link to='/dapp/support' />
+          </MenuItem>
         </Menu>
       </SidebarContent>
       <SidebarFooter>

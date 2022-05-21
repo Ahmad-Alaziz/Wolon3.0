@@ -1,13 +1,14 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages';
-import Dashboard from './pages/dashboard';
+import DAPP from './DAPP';
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />} exact />
+        <Route index element={<Home />} exact />
+        <Route path='dapp/*' element={<DAPP />} />
       </Routes>
     </Router>
   );

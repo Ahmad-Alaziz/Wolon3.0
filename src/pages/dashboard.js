@@ -1,21 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SignIn from '../components/SignIn';
-import ScrollToTop from '../components/ScrollToTop';
-import { Sidebar } from 'semantic-ui-react';
-import Navbar from '../components/Navbar';
-import VerticalNavbar from '../components/VerticalNavBar';
+import { Container } from '../components/SignIn/SigninElements';
 
 function Dashboard() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
-    <>
-      <VerticalNavbar />
-    </>
+    <div style={{ height: '100vh' }}>
+      <SignIn />
+    </div>
   );
 }
 
