@@ -98,13 +98,15 @@ const Navbar = ({ toggle, connect, address }) => {
                 </NavLinks>
               </NavItem>
             </NavMenu>
-            <NavBtn onClick={connect}>
-              {address ? (
-                <MetaMaskbtn>{address.substring(1, 12)}...</MetaMaskbtn>
-              ) : (
-                <MetaMaskbtn>Connect to MetaMask</MetaMaskbtn>
-              )}
-            </NavBtn>
+            {connect && (
+              <NavBtn onClick={connect}>
+                {address ? (
+                  <MetaMaskbtn>{address.substring(1, 12)}...</MetaMaskbtn>
+                ) : (
+                  <MetaMaskbtn>Connect to MetaMask</MetaMaskbtn>
+                )}
+              </NavBtn>
+            )}
           </NavbarContainer>
         </Nav>
       </IconContext.Provider>
