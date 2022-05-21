@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import Footer from '../components/Footer';
@@ -98,7 +98,7 @@ function Home() {
       <InfoSection {...sectionThree} />
       <InfoSection {...sectionFour} />
       <Services />
-      <StepExampleGroup {...sectionFive} connect={connect} />
+      <StepExampleGroup {...sectionFive} connect={connect} address={address} />
       <Footer />
     </>
   );
