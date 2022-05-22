@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Container,
   FormWrap,
-  Icon,
   FormContent,
   Form,
   FormH1,
@@ -17,7 +16,6 @@ const SignIn = () => {
     <>
       <Container>
         <FormWrap>
-          <Icon to='/'>dolla</Icon>
           <FormContent>
             <Form action='#'>
               <FormH1>Sign in to your account</FormH1>
