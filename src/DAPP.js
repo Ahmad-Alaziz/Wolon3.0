@@ -3,12 +3,13 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/dashboard';
 import VerticalNavbar from './components/VerticalNavBar';
 import HelpOthers from './pages/helpOthers';
+import { Support } from "./pages/support";
 
 import './App.scss';
 import HelpForm from './components/HelpForm';
 import { ChatRoom } from './pages/chatRoom';
 
-const DAPP = ({ dappContract, address, memberNFT }) => {
+const DAPP = ({ dappContract, address, memberNFT, provider }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [helpAds, setHelpAds] = useState([]);
 
@@ -24,7 +25,7 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
           setHelpAds([...adsList]);
         }
       } catch (error) {
-        console.warn('Error: ', error);
+        console.warn("Error: ", error);
       }
     };
 
@@ -60,7 +61,11 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
         <Route path='messages' element={<ChatRoom />} />
         <Route path='chat' element={<ChatRoom />} />
         <Route path='vote' element={<HelpForm />} />
-        <Route path='support' element={<ChatRoom />} />
+        <Route path="vote" element={<HelpForm />} />
+        <Route
+          path="support"
+          element={<Support address={address} provider={provider} />}
+        />
       </Routes>
     </div>
   );

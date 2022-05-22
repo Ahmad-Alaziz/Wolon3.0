@@ -14,6 +14,7 @@ import {
 } from '../components/InfoSection/Data';
 import Services from '../components/Services';
 import StepExampleGroup from '../components/Steps';
+
 const Home = ({ dappContract, connect, address }) => {
   const [isOpen, setIsOpen] = useState(false);
 
