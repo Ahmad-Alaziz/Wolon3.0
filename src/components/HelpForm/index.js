@@ -57,7 +57,7 @@ const customStyles = {
   }),
 };
 
-const HelpForm = ({ dappContract }) => {
+const HelpForm = ({ dappContract, address }) => {
   const [isInPerson, setIsInPerson] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -74,19 +74,20 @@ const HelpForm = ({ dappContract }) => {
       const helpObject = {
         title: title,
         description: description,
+        address: address,
         isOnline: !isInPerson,
         helpAdCategory: category.value,
       };
 
       const blob = new Blob([JSON.stringify(helpObject)], {
-        type: 'application/json',
+        type: "application/json",
       });
-      const file = new File([blob], 'helpPost.json');
+      const file = new File([blob], "helpPost.json");
 
       const cid = await storage.put([file], {
         onRootCidReady: (localCid) => {
           console.log(`> 🔑 locally calculated Content ID: ${localCid} `);
-          console.log('> 📡 sending files to web3.storage ');
+          console.log("> 📡 sending files to web3.storage ");
         },
         onStoredChunk: (bytes) =>
           console.log(
@@ -99,7 +100,7 @@ const HelpForm = ({ dappContract }) => {
       const addRequest = await dappContract.addHelpAd(helpRequestLink);
       await addRequest.wait();
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
@@ -109,7 +110,7 @@ const HelpForm = ({ dappContract }) => {
         <FormContent>
           <Form onSubmit={handleSubmit}>
             <FormH1>Create a Help Request</FormH1>
-            <FormLabel htmlFor='for'>Category</FormLabel>
+            <FormLabel htmlFor="for">Category</FormLabel>
             <FormSelect
               defaultValue={options[0]}
               value={category}
@@ -118,32 +119,32 @@ const HelpForm = ({ dappContract }) => {
               required
               styles={customStyles}
             />
-            <FormLabel htmlFor='for'>Title</FormLabel>
+            <FormLabel htmlFor="for">Title</FormLabel>
             <FormInput
-              type='text'
+              type="text"
               required
               value={title}
               onChange={(event) => setTitle(event.target.value)}
             />
-            <FormLabel htmlFor='for'>Description</FormLabel>
+            <FormLabel htmlFor="for">Description</FormLabel>
             <FormArea
-              type='text'
+              type="text"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               required
             />
 
-            <FormLabel htmlFor='for'>
+            <FormLabel htmlFor="for">
               Should This Help be Performed in Person?
             </FormLabel>
-            <div style={{ marginBottom: '10px', marginTop: '10px' }}>
+            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
               <Toggle
-                id='isInPerson'
+                id="isInPerson"
                 defaultChecked={isInPerson}
                 onChange={() => setIsInPerson((prev) => !prev)}
               />
             </div>
-            <FormButton type='submit'>Submit Request</FormButton>
+            <FormButton type="submit">Submit Request</FormButton>
           </Form>
         </FormContent>
       </FormWrap>
