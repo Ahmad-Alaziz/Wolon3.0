@@ -6,6 +6,7 @@ import HelpOthers from './pages/helpOthers';
 
 import './App.scss';
 import Chat from './pages/chat';
+import HelpForm from './components/HelpForm';
 
 const DAPP = ({ dappContract, address, memberNFT }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -49,12 +50,16 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
           }
         />
         <Route
-          path='help'
+          path='helpOthers'
           element={<HelpOthers dappContract={dappContract} helpAds={helpAds} />}
+        />
+        <Route
+          path='getHelp'
+          element={<HelpForm dappContract={dappContract} />}
         />
         <Route path='messages' element={<Dashboard />} />
         <Route path='chat' element={<Chat />} />
-        <Route path='vote' element={<Dashboard />} />
+        <Route path='vote' element={<HelpForm />} />
         <Route path='support' element={<Dashboard />} />
       </Routes>
     </div>
