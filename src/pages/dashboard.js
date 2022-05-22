@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Web3Storage } from "web3.storage";
-import { ethers } from "ethers";
-import SignIn from "../components/SignIn";
-import { Container } from "../components/SignIn/SigninElements";
+import React, { useEffect, useState } from 'react';
+import { Web3Storage } from 'web3.storage';
+import { ethers } from 'ethers';
+import { Container } from '../components/SignIn/SigninElements';
 import {
   HelpRequestContainer,
   HelpContent,
@@ -10,21 +9,23 @@ import {
   HelpH1,
   HelpImg,
   OnSiteCircle,
-} from "../components/HelpList/HelpListElements";
+} from '../components/HelpList/HelpListElements';
+import ActivityIndicator from '../components/ActivityIndicator';
 
 const Dashboard = ({ dappContract, memberNFT }) => {
   const [budgetBalance, setBudgetBalance] = useState(null);
   const [helpAd, setHelpAd] = useState(null);
-  const [helpAdTitle, setHelpAdTitle] = useState("");
-  const [helpAdContent, setHelpAdContent] = useState("");
-  const [helpAdCategory, setHelpAdCategory] = useState("");
-  const [helpAdIsOnline, setHelpAdIsOnline] = useState("");
+  const [helpAdTitle, setHelpAdTitle] = useState('');
+  const [helpAdContent, setHelpAdContent] = useState('');
+  const [helpAdCategory, setHelpAdCategory] = useState('');
+  const [helpAdIsOnline, setHelpAdIsOnline] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const postHelpAd = async (link) => {
     try {
       const helpAd = await dappContract.addHelpAd(link);
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
     }
   };
 
@@ -44,14 +45,14 @@ const Dashboard = ({ dappContract, memberNFT }) => {
       };
 
       const blob = new Blob([JSON.stringify(helpObject)], {
-        type: "application/json",
+        type: 'application/json',
       });
-      const file = new File([blob], "helpPost.json");
+      const file = new File([blob], 'helpPost.json');
 
       const cid = await storage.put([file], {
         onRootCidReady: (localCid) => {
           console.log(`> 🔑 locally calculated Content ID: ${localCid} `);
-          console.log("> 📡 sending files to web3.storage ");
+          console.log('> 📡 sending files to web3.storage ');
         },
         onStoredChunk: (bytes) =>
           console.log(
@@ -64,69 +65,80 @@ const Dashboard = ({ dappContract, memberNFT }) => {
       const addRequest = await dappContract.addHelpAd(helpRequestLink);
       await addRequest.wait();
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
     }
   };
 
-  useEffect(() => {
-    const getBudgetBalance = async () => {
-      try {
-        const balance = await dappContract.getBudgetBalance();
-        if (balance) {
-          setBudgetBalance(ethers.utils.formatEther(balance));
-        }
-      } catch (error) {
-        console.warn("Error: ", error);
+  const getBudgetBalance = async () => {
+    try {
+      const balance = await dappContract.getBudgetBalance();
+      if (balance) {
+        setBudgetBalance(ethers.utils.formatEther(balance));
       }
-    };
+    } catch (error) {
+      console.warn('Error: ', error);
+    }
+  };
 
-    const getUserAd = async () => {
-      try {
-        const userAd = await dappContract.getUserAd();
-        if (userAd) {
-          fetch(`https://${userAd}`)
-            .then((res) => res.json())
-            .then((data) => {
-              setHelpAd(data);
-            });
-        }
-      } catch (error) {
-        console.warn("Error: ", error);
+  const getUserAd = async () => {
+    try {
+      const userAd = await dappContract.getUserAd();
+      if (userAd) {
+        fetch(`https://${userAd}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setHelpAd(data);
+          });
       }
-    };
-    getUserAd();
-    getBudgetBalance();
+    } catch (error) {
+      console.warn('Error: ', error);
+    }
+  };
+
+  const fetchUserData = async () => {
+    setIsLoading(true);
+    await getUserAd();
+    await getBudgetBalance();
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchUserData();
   }, [dappContract]);
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <Container>
-      <div style={{ color: "white", marginLeft: "20%", marginTop: "10%" }}>
+      <div style={{ color: 'white', marginLeft: '20%', marginTop: '10%' }}>
         <p>Helper Tokens: {memberNFT.helperTokens}</p>
         <p>Found Help: {memberNFT.foundHelp}</p>
         <p>Budget Balance: {budgetBalance}</p>
         {!helpAd ? (
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              width: "400px",
-              marginTop: "2%",
+              display: 'flex',
+              flexDirection: 'column',
+              width: '400px',
+              marginTop: '2%',
             }}
           >
             <h4>Currently you are not looking for help</h4>
             <form
               onSubmit={handleSubmit}
               style={{
-                marginTop: "10px",
-                display: "flex",
-                flexDirection: "column",
+                marginTop: '10px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
             >
               <label>
                 Is Online?:
                 <input
-                  name="isOnline"
-                  type="checkbox"
+                  name='isOnline'
+                  type='checkbox'
                   checked={helpAdIsOnline}
                   onChange={(event) => setHelpAdIsOnline(event.target.checked)}
                 />
@@ -137,35 +149,35 @@ const Dashboard = ({ dappContract, memberNFT }) => {
                   value={helpAdCategory}
                   onChange={(event) => setHelpAdCategory(event.target.value)}
                 >
-                  {" "}
-                  <option value="grapefruit">Grapefruit</option>
-                  <option value="lime">Lime</option>
-                  <option value="coconut">Coconut</option>
-                  <option value="mango">Mango</option>
+                  {' '}
+                  <option value='grapefruit'>Grapefruit</option>
+                  <option value='lime'>Lime</option>
+                  <option value='coconut'>Coconut</option>
+                  <option value='mango'>Mango</option>
                 </select>
               </label>
               <label>
                 Title:
                 <input
-                  type="text"
+                  type='text'
                   value={helpAdTitle}
                   onChange={(event) => setHelpAdTitle(event.target.value)}
-                />{" "}
+                />{' '}
               </label>
               <label>
                 Description:
                 <textarea
                   value={helpAdContent}
                   onChange={(event) => setHelpAdContent(event.target.value)}
-                />{" "}
+                />{' '}
               </label>
-              <input type="submit" value="Post your help ad" />
+              <input type='submit' value='Post your help ad' />
             </form>
           </div>
         ) : (
           <HelpRequestContainer>
             <div>
-              <HelpImg src={require("../images/meta.png")} />
+              <HelpImg src={require('../images/meta.png')} />
             </div>
             <HelpContent>
               <HelpH1>{helpAd.title}</HelpH1>

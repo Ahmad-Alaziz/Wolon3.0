@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ethers, providers } from "ethers";
-import Web3Modal from "web3modal";
-import WalletConnectProvider from "@walletconnect/ethereum-provider";
-import { transformMemberData } from "./utils";
-import Wolon from "./abi/Wolon.json";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ethers, providers } from 'ethers';
+import Web3Modal from 'web3modal';
+import WalletConnectProvider from '@walletconnect/ethereum-provider';
+import { transformMemberData } from './utils';
+import Wolon from './abi/Wolon.json';
 
-import "./App.css";
-import Home from "./pages";
-import DAPP from "./DAPP";
+import './App.css';
+import Home from './pages';
+import DAPP from './DAPP';
 
 const { REACT_APP_CONTRACT_ADDRESS } = process.env;
 
@@ -16,11 +16,11 @@ const App = () => {
   const [dappContract, setDappContract] = useState(null);
   const [memberNFT, setMemberNFT] = useState(null);
   const [chainId, setChainId] = useState(1);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState('');
   const [provider, setProvider] = useState();
 
   const web3Modal = new Web3Modal({
-    network: "mainnet",
+    network: 'mainnet',
     cacheProvider: true,
     providerOptions: {
       walletconnect: {
@@ -33,18 +33,18 @@ const App = () => {
   });
 
   const reset = () => {
-    setAddress("");
+    setAddress('');
     setProvider(undefined);
     web3Modal.clearCachedProvider();
   };
 
   const connect = async () => {
     if (!process.env.REACT_APP_INFURA_ID) {
-      throw new Error("Missing Infura Id");
+      throw new Error('Missing Infura Id');
     }
     const web3Provider = await web3Modal.connect();
 
-    web3Provider.on("disconnect", reset);
+    web3Provider.on('disconnect', reset);
 
     const accounts = await web3Provider.enable();
     setAddress(accounts[0]);
@@ -73,7 +73,7 @@ const App = () => {
           setMemberNFT(transformMemberData(memberNFT));
         }
       } catch (error) {
-        console.warn("Error: ", error);
+        console.warn('Error: ', error);
       }
     };
 
@@ -83,7 +83,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {!memberNFT ? (
+        {memberNFT ? (
           <Route
             index
             element={
@@ -97,7 +97,7 @@ const App = () => {
           />
         ) : (
           <Route
-            path="/*"
+            path='/*'
             element={
               <DAPP
                 dappContract={dappContract}
