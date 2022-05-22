@@ -15,12 +15,13 @@ const Dashboard = ({ dappContract, memberNFT }) => {
   const [budgetBalance, setBudgetBalance] = useState(null);
   const [helpAd, setHelpAd] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [helperAddress, setHelperAddress] = useState("");
 
   const postHelpAd = async (link) => {
     try {
       const helpAd = await dappContract.addHelpAd(link);
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
@@ -31,7 +32,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         setBudgetBalance(ethers.utils.formatEther(balance));
       }
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
@@ -46,18 +47,41 @@ const Dashboard = ({ dappContract, memberNFT }) => {
           });
       }
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
-  const fetchUserData = async () => {
-    setIsLoading(true);
-    await getUserAd();
-    await getBudgetBalance();
-    setIsLoading(false);
+  const removeAd = async () => {
+    try {
+      setIsLoading(true);
+      const removeAd = await dappContract.removeUserAd();
+      await removeAd.wait();
+      setIsLoading(false);
+    } catch (error) {
+      console.warn("Error: ", error);
+      setIsLoading(false);
+    }
+  };
+
+  const helpFound = async () => {
+    try {
+      setIsLoading(true);
+      const solved = await dappContract.helpFound(helperAddress);
+      await solved.wait();
+      setIsLoading(false);
+    } catch (error) {
+      console.warn("Error: ", error);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
+    const fetchUserData = async () => {
+      setIsLoading(true);
+      await getUserAd();
+      await getBudgetBalance();
+      setIsLoading(false);
+    };
     fetchUserData();
   }, [dappContract]);
 
@@ -67,7 +91,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
 
   return (
     <Container>
-      <div style={{ color: 'white', marginLeft: '20%', marginTop: '10%' }}>
+      <div style={{ color: "white", marginLeft: "20%", marginTop: "10%" }}>
         <p>Helper Tokens: {memberNFT.helperTokens}</p>
         <p>Found Help: {memberNFT.foundHelp}</p>
         <p>Budget Balance: {budgetBalance}</p>
@@ -76,7 +100,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         ) : (
           <HelpRequestContainer>
             <div>
-              <HelpImg src={require('../images/meta.png')} />
+              <HelpImg src={require("../images/meta.png")} />
             </div>
             <HelpContent>
               <HelpH1>{helpAd.title}</HelpH1>
@@ -84,7 +108,14 @@ const Dashboard = ({ dappContract, memberNFT }) => {
               <p>{helpAd.helpAdCategory}</p>
             </HelpContent>
             <HelpH1>On-Site:</HelpH1>
-            <OnSiteCircle active={helpAd.isOnline} />
+            <OnSiteCircle active={!helpAd.isOnline} />
+            <button onClick={removeAd}>Remove Ad</button>
+            <input
+              type="text"
+              value={helperAddress}
+              onChange={(event) => setHelperAddress(event.target.value)}
+            />
+            <button onClick={helpFound}>Help Found</button>
           </HelpRequestContainer>
         )}
       </div>
