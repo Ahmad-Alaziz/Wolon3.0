@@ -94,7 +94,6 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         console.warn("Error: ", error);
       }
     };
-
     getUserAd();
     getBudgetBalance();
   }, [dappContract]);

@@ -1,9 +1,9 @@
 import React from 'react';
 import HelpList from '../components/HelpList';
-function HelpOthers() {
+function HelpOthers({ helpAds }) {
   return (
     <>
-      <HelpList />
+      <HelpList helpAds={helpAds} />
     </>
   );
 }
