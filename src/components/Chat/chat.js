@@ -20,6 +20,7 @@ export const Chat = ({ address }) => {
   const sendMessageOnClick = (message) => {
     if (wakuStatus !== 'Ready') return;
 
+    message = `You said:\n ${message}`;
     const time = new Date();
     sendMessage(`${address}##&&^^${message}`, waku, time);
 
@@ -43,7 +44,10 @@ export const Chat = ({ address }) => {
     const { text, timestamp } = SimpleChatMessage.decode(wakuMessage.payload);
     const fullText = text.split('##&&^^');
     const address = fullText[0];
-    const msg = fullText[1];
+
+    const msg = `${address.slice(0, 4)}...${address.slice(38, 42)} said:\n ${
+      fullText[1]
+    }`;
 
     console.log(fullText);
 
