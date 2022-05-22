@@ -1,52 +1,17 @@
 import { Framework as SuperfluidFramework } from "@superfluid-finance/sdk-core";
 import { useEffect, useState } from "react";
+import { ethers } from "ethers";
+
+import ActivityIndicator from "../components/ActivityIndicator";
 
 export const Support = ({ address, provider }) => {
   const [superfluid, setSuperfluid] = useState(undefined);
   const [modalOpen, setModalOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [existingFlow, setExistingFlow] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!provider) {
-      setSuperfluid(undefined);
-      return;
-    }
-    SuperfluidFramework.create({
-      chainId: 80001,
-      provider,
-    }).then(setSuperfluid);
-  }, [provider]);
-
-  useEffect(() => {
-    if (!superfluid) return;
-    (async () => {
-      const daix = await superfluid.loadSuperToken("fDAIx");
-      const signer = provider.getSigner(0);
-      try {
-        const flow = await superfluid.cfaV1.getFlow({
-          sender: address,
-          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-          superToken: daix.address,
-          providerOrSigner: signer,
-        });
-        if (Number(flow.flowRate) > 0) {
-          setExistingFlow(true);
-        }
-      } catch (e) {
-        console.log(e);
-        setExistingFlow(false);
-      }
-    })();
-  }, [superfluid]);
-
-  if (!superfluid)
-    return (
-      <div>
-        Please sign in using Polygon Network to open a stream for this profile
-      </div>
-    );
+  const daiTokenContract = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
 
   const createFlow = async () => {
     setLoading(true);
@@ -69,10 +34,93 @@ export const Support = ({ address, provider }) => {
     }
   };
 
+  const deleteFlow = async () => {
+    setLoading(true);
+    const signer = provider.getSigner(0);
+    try {
+      const deleteFlowOperation = superfluid.cfaV1.deleteFlow({
+        sender: address,
+        receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+        superToken: daiTokenContract,
+      });
+      console.log("Deleting your stream...");
+
+      const transaction = await deleteFlowOperation.exec(signer);
+      await transaction.wait();
+      console.log(
+        `Congrats - you've just deleted your money stream!
+           Super Token: DAIxF
+           Sender: ${address}
+           Receiver: ${process.env.REACT_APP_CONTRACT_ADDRESS}
+        `
+      );
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    if (!provider) {
+      setSuperfluid(undefined);
+      return;
+    }
+    SuperfluidFramework.create({
+      chainId: 80001,
+      provider,
+    }).then(setSuperfluid);
+  }, [provider]);
+
+  useEffect(() => {
+    if (!superfluid) return;
+    setLoading(true);
+    const fetchStream = async () => {
+      const daix = await superfluid.loadSuperToken("fDAIx");
+      const signer = provider.getSigner(0);
+      try {
+        const flow = await superfluid.cfaV1.getFlow({
+          sender: address,
+          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+          superToken: daix.address,
+          providerOrSigner: signer,
+        });
+        if (Number(flow.flowRate) > 0) {
+          console.log(flow);
+          setExistingFlow(flow);
+        }
+      } catch (e) {
+        console.log(e);
+        setExistingFlow(null);
+        setLoading(false);
+      }
+    };
+
+    setTimeout(() => {
+      fetchStream();
+      setLoading(false);
+    }, 3000);
+  }, [address, provider, superfluid]);
+
+  if (!superfluid)
+    return <div>Please sign in using Polygon Network to open a stream</div>;
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <>
       {existingFlow ? (
-        "You are already supporting us :)"
+        <>
+          <p>You are already supporting us :)</p>
+          <p>
+            Current deposit: {ethers.utils.formatEther(existingFlow.deposit)}{" "}
+            DAI
+          </p>
+          <button onClick={deleteFlow}>Stop Stream</button>
+        </>
       ) : (
         <button onClick={() => setModalOpen(true)}>
           Sponsor (create stream)
@@ -81,7 +129,7 @@ export const Support = ({ address, provider }) => {
       {modalOpen && (
         <div
           className="h-full w-full top-0 left-0 absolute bg-[#000000a0] flex justify-center items-center text-black"
-          onClick={() => !loading && setModalOpen(false)}
+          onClick={() => !isLoading && setModalOpen(false)}
         >
           <div
             className="p-4 bg-white w-96 min-h-80 rounded-xl"
@@ -89,7 +137,7 @@ export const Support = ({ address, provider }) => {
               e.stopPropagation();
             }}
           >
-            {loading ? (
+            {isLoading ? (
               <div>Waiting for tx confirmation...</div>
             ) : (
               <>
