@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Container,
   HelpRequestContainer,
@@ -7,47 +7,67 @@ import {
   HelpH1,
   HelpImg,
   OnSiteCircle,
-} from './HelpListElements';
+} from "./HelpListElements";
 
 const mock = [
   {
-    address: '0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8',
+    address: "0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8",
     description:
-      'Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad',
+      "Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad",
     onSite: true,
   },
   {
-    address: '0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8',
+    address: "0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8",
     description:
-      'Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad',
+      "Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad",
     onSite: false,
   },
   {
-    address: '0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8',
+    address: "0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8",
     description:
-      'Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad',
+      "Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad",
     onSite: false,
   },
 ];
 
-const HelpList = () => {
+const HelpList = ({ helpAds }) => {
+  const [fetchedAds, setFetchedAds] = useState([]);
+
+  useEffect(() => {
+    const ads = [];
+    if (helpAds) {
+      helpAds.forEach((ad) => {
+        fetch(`https://${ad}`)
+          .then((res) => res.json())
+          .then((data) => {
+            ads.push(data);
+          });
+      });
+    }
+
+    setTimeout(() => {
+      setFetchedAds([...ads]);
+    }, 3000);
+  }, [helpAds]);
   return (
     <Container>
-      {mock.map((request, index) => {
-        return (
-          <HelpRequestContainer key={index}>
-            <div>
-              <HelpImg src={require("../../images/meta.png")} />
-            </div>
-            <HelpContent>
-              <HelpH1>{request.address}</HelpH1>
-              <HelpH2>{request.description}</HelpH2>
-            </HelpContent>
-            <HelpH1>On-Site:</HelpH1>
-            <OnSiteCircle active={request.onSite} />
-          </HelpRequestContainer>
-        );
-      })}
+      {fetchedAds &&
+        fetchedAds.map((request, index) => {
+          return (
+            <HelpRequestContainer key={index}>
+              <div>
+                <HelpImg src={require("../../images/meta.png")} />
+              </div>
+              <HelpContent>
+                <HelpH1>{request.title}</HelpH1>
+                <HelpH2>{request.description}</HelpH2>
+                <p>{request.helpAdCategory}</p>
+              </HelpContent>
+              <HelpH1>On-Site:</HelpH1>
+              <OnSiteCircle active={request.isOnline} />
+            </HelpRequestContainer>
+          );
+        })}
     </Container>
   );
 };
