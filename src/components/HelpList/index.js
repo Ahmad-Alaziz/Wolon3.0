@@ -9,10 +9,12 @@ import {
   OnSiteCircle,
 } from "./HelpListElements";
 import ActivityIndicator from "../ActivityIndicator";
+import { FaCarCrash, FaSchool } from "react-icons/fa";
 
 const HelpList = ({ helpAds }) => {
   const [fetchedAds, setFetchedAds] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,7 +45,11 @@ const HelpList = ({ helpAds }) => {
           return (
             <HelpRequestContainer key={index}>
               <div>
-                <HelpImg src={require("../../images/meta.png")} />
+                {request.helpAdCategory === "study" ? (
+                  <FaSchool />
+                ) : (
+                  <FaCarCrash />
+                )}
               </div>
               <HelpContent>
                 <HelpH1>{request.title}</HelpH1>

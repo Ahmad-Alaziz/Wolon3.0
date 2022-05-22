@@ -24,9 +24,9 @@ import ActivityIndicator from "../ActivityIndicator";
 import { Button } from "semantic-ui-react";
 
 const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
+  { value: "study", label: "Study" },
+  { value: "fixing", label: "Fixing" },
+  { value: "social", label: "Social" },
 ];
 
 const customStyles = {
