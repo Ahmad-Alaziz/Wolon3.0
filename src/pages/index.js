@@ -70,25 +70,6 @@ function Home() {
     setProvider(provider);
   }
 
-  async function signMessage() {
-    if (!provider) {
-      throw new Error('Provider not connected');
-    }
-    const msg = formatAuthMessage(address, chainId);
-    const sig = await provider.send('personal_sign', [msg, address]);
-    console.log('Signature', sig);
-    console.log('isValid', utils.verifyMessage(msg, sig) === address);
-  }
-
-  async function transferDai() {
-    if (!provider) {
-      throw new Error('Provider not connected');
-    }
-    const contract = new Contract(DAI.address, DAI.abi, provider.getSigner());
-    const res = await contract.transfer(address, utils.parseEther('1'));
-    console.log('res', res);
-  }
-
   return (
     <>
       <Sidebar isOpen={isOpen} toggle={toggle} />
