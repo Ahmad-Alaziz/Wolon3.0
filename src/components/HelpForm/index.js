@@ -19,6 +19,7 @@ import {
 
 import Toggle from 'react-toggle';
 import ActivityIndicator from '../ActivityIndicator';
+import { Button } from 'semantic-ui-react';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -64,7 +65,7 @@ const HelpForm = ({ dappContract }) => {
   const [isInPerson, setIsInPerson] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState(false);
+  const [category, setCategory] = useState(options[0]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
@@ -107,15 +108,16 @@ const HelpForm = ({ dappContract }) => {
 
       const addRequest = await dappContract.addHelpAd(helpRequestLink);
       await addRequest.wait();
+      setIsLoading(false);
+      setIsValid(true);
+      setShow(true);
     } catch (error) {
       console.warn('Error: ', error);
 
+      setIsLoading(false);
       setIsValid(false);
       setShow(true);
     }
-    setIsLoading(false);
-    setIsValid(true);
-    setShow(true);
   };
 
   if (isLoading) {
@@ -135,45 +137,33 @@ const HelpForm = ({ dappContract }) => {
               top: 'auto',
             }}
           >
-            {isValid ? (
-              <Alert show={show} variant='success' dismissible>
-                <Alert.Heading>Success!</Alert.Heading>
-                <p>Your help request has been published successfully!</p>
-                <hr />
-                <p className='mb-0'>
-                  You have opened a continious cashflow that will be sending
-                  money as long as your Advert is being shown, you can delete
-                  the Advert and cancel the subscription at any point and you
-                  won't have to pay for any second more than you need!
-                </p>
-                <div className='d-flex justify-content-end'>
-                  <button
-                    onClick={() => setShow(false)}
-                    variant='outline-success'
-                  >
-                    Close me y'all!
-                  </button>
-                </div>
-              </Alert>
-            ) : (
-              <Alert show={show} variant='danger'>
-                <Alert.Heading>Oh Snap!</Alert.Heading>
-                <p>It seems like something went wrong :/</p>
-                <hr />
-                <p className='mb-0'>
-                  If you already have a running Advert you need to cancel it
-                  first. You can only have one Advert running at a time.
-                </p>
-                <div className='d-flex justify-content-end'>
-                  <button
-                    onClick={() => setShow(false)}
-                    variant='outline-success'
-                  >
-                    Close me y'all!
-                  </button>
-                </div>
-              </Alert>
-            )}
+            <Alert show={show && isValid} variant='success' dismissible>
+              <div className='d-flex justify-content-end'>
+                <Button onClick={() => setShow(false)}>X</Button>
+              </div>
+              <Alert.Heading>Success!</Alert.Heading>
+              <p>Your help request has been published successfully!</p>
+              <hr />
+              <p className='mb-0'>
+                You have opened a continious cashflow that will be sending money
+                as long as your Advert is being shown, you can delete the Advert
+                and cancel the subscription at any point and you won't have to
+                pay for any second more than you need!
+              </p>
+            </Alert>
+
+            <Alert show={show && !isValid} variant='danger'>
+              <div className='d-flex justify-content-end'>
+                <Button onClick={() => setShow(false)}>X</Button>
+              </div>
+              <Alert.Heading>Oh Snap!</Alert.Heading>
+              <p>It seems like something went wrong :/</p>
+              <hr />
+              <p className='mb-0'>
+                If you already have a running Advert you need to cancel it
+                first. You can only have one Advert running at a time.
+              </p>
+            </Alert>
           </div>
 
           <Form onSubmit={handleSubmit}>
