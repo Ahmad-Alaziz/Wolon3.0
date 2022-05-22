@@ -56,7 +56,7 @@ const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
           }}
         >
           {!collapsed && (
-            <NavLogo to='/dapp'>
+            <NavLogo to='/'>
               <Img
                 src={require('../../images/logo-text-white.png')}
                 alt='Logo'

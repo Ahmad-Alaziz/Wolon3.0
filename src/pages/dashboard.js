@@ -10,18 +10,20 @@ import {
   OnSiteCircle,
 } from '../components/HelpList/HelpListElements';
 import ActivityIndicator from '../components/ActivityIndicator';
+import DashboardBox from '../components/DashboardBox';
+import { FaCoins, FaHandsHelping, FaHeart, FaMoneyBill } from 'react-icons/fa';
 
 const Dashboard = ({ dappContract, memberNFT }) => {
   const [budgetBalance, setBudgetBalance] = useState(null);
   const [helpAd, setHelpAd] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [helperAddress, setHelperAddress] = useState("");
+  const [helperAddress, setHelperAddress] = useState('');
 
   const postHelpAd = async (link) => {
     try {
       const helpAd = await dappContract.addHelpAd(link);
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
     }
   };
 
@@ -32,7 +34,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         setBudgetBalance(ethers.utils.formatEther(balance));
       }
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
     }
   };
 
@@ -47,7 +49,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
           });
       }
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
     }
   };
 
@@ -58,7 +60,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
       await removeAd.wait();
       setIsLoading(false);
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
       setIsLoading(false);
     }
   };
@@ -70,7 +72,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
       await solved.wait();
       setIsLoading(false);
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
       setIsLoading(false);
     }
   };
@@ -91,17 +93,49 @@ const Dashboard = ({ dappContract, memberNFT }) => {
 
   return (
     <Container>
-      <div style={{ color: "white", marginLeft: "20%", marginTop: "10%" }}>
-        <p>Helper Tokens: {memberNFT.helperTokens}</p>
-        <p>Found Help: {memberNFT.foundHelp}</p>
-        <p>Budget Balance: {budgetBalance}</p>
+      <div style={{ color: 'white', marginLeft: '20%', marginTop: '10%' }}>
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+          }}
+        >
+          <DashboardBox
+            amount={memberNFT.helperTokens}
+            icon={<FaCoins />}
+            label='Tokens'
+            unit='WLN Tokens'
+          />
+          <DashboardBox
+            amount={memberNFT.budgetBalance}
+            icon={<FaMoneyBill />}
+            label='Total Collected Budget'
+            unit='Matic'
+          />
+          <DashboardBox
+            amount={memberNFT.foundHelp}
+            icon={<FaHeart />}
+            label='Help Received'
+            unit='Help'
+          />
+
+          <DashboardBox
+            amount={0}
+            icon={<FaHandsHelping />}
+            label='Total Supported'
+            unit='Matic'
+          />
+        </div>
+
         <button onClick={removeAd}>Remove Ad</button>
         {!helpAd ? (
           <p>Go to GetHelp</p>
         ) : (
           <HelpRequestContainer>
             <div>
-              <HelpImg src={require("../images/meta.png")} />
+              <HelpImg src={require('../images/meta.png')} />
             </div>
             <HelpContent>
               <HelpH1>{helpAd.title}</HelpH1>
@@ -113,7 +147,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
             <OnSiteCircle active={!helpAd.isOnline} />
             <button onClick={removeAd}>Remove Ad</button>
             <input
-              type="text"
+              type='text'
               value={helperAddress}
               onChange={(event) => setHelperAddress(event.target.value)}
             />

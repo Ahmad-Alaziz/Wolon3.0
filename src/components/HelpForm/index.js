@@ -90,14 +90,14 @@ const HelpForm = ({ dappContract, address }) => {
       };
 
       const blob = new Blob([JSON.stringify(helpObject)], {
-        type: "application/json",
+        type: 'application/json',
       });
-      const file = new File([blob], "helpPost.json");
+      const file = new File([blob], 'helpPost.json');
 
       const cid = await storage.put([file], {
         onRootCidReady: (localCid) => {
           console.log(`> 🔑 locally calculated Content ID: ${localCid} `);
-          console.log("> 📡 sending files to web3.storage ");
+          console.log('> 📡 sending files to web3.storage ');
         },
         onStoredChunk: (bytes) =>
           console.log(
@@ -138,10 +138,12 @@ const HelpForm = ({ dappContract, address }) => {
               top: 'auto',
             }}
           >
-            <Alert show={show && isValid} variant='success' dismissible>
-              <div className='d-flex justify-content-end'>
-                <Button onClick={() => setShow(false)}>X</Button>
-              </div>
+            <Alert
+              show={show && isValid}
+              onClose={() => setShow(false)}
+              variant='success'
+              dismissible
+            >
               <Alert.Heading>Success!</Alert.Heading>
               <p>Your help request has been published successfully!</p>
               <hr />
@@ -153,10 +155,12 @@ const HelpForm = ({ dappContract, address }) => {
               </p>
             </Alert>
 
-            <Alert show={show && !isValid} variant='danger'>
-              <div className='d-flex justify-content-end'>
-                <Button onClick={() => setShow(false)}>X</Button>
-              </div>
+            <Alert
+              show={show && !isValid}
+              onClose={() => setShow(false)}
+              variant='danger'
+              dismissible
+            >
               <Alert.Heading>Oh Snap!</Alert.Heading>
               <p>It seems like something went wrong :/</p>
               <hr />
@@ -169,7 +173,7 @@ const HelpForm = ({ dappContract, address }) => {
 
           <Form onSubmit={handleSubmit}>
             <FormH1>Create a Help Request</FormH1>
-            <FormLabel htmlFor="for">Category</FormLabel>
+            <FormLabel htmlFor='for'>Category</FormLabel>
             <FormSelect
               defaultValue={options[0]}
               value={category}
@@ -178,32 +182,32 @@ const HelpForm = ({ dappContract, address }) => {
               required
               styles={customStyles}
             />
-            <FormLabel htmlFor="for">Title</FormLabel>
+            <FormLabel htmlFor='for'>Title</FormLabel>
             <FormInput
-              type="text"
+              type='text'
               required
               value={title}
               onChange={(event) => setTitle(event.target.value)}
             />
-            <FormLabel htmlFor="for">Description</FormLabel>
+            <FormLabel htmlFor='for'>Description</FormLabel>
             <FormArea
-              type="text"
+              type='text'
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               required
             />
 
-            <FormLabel htmlFor="for">
+            <FormLabel htmlFor='for'>
               Should This Help be Performed in Person?
             </FormLabel>
-            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
+            <div style={{ marginBottom: '10px', marginTop: '10px' }}>
               <Toggle
-                id="isInPerson"
+                id='isInPerson'
                 defaultChecked={isInPerson}
                 onChange={() => setIsInPerson((prev) => !prev)}
               />
             </div>
-            <FormButton type="submit">Submit Request</FormButton>
+            <FormButton type='submit'>Submit Request</FormButton>
           </Form>
         </FormContent>
       </FormWrap>
