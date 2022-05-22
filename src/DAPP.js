@@ -47,6 +47,7 @@ const DAPP = ({ dappContract, address, memberNFT, provider }) => {
               dappContract={dappContract}
               memberNFT={memberNFT}
               setHelpAds={setHelpAds}
+              provider={provider}
             />
           }
         />
@@ -56,12 +57,36 @@ const DAPP = ({ dappContract, address, memberNFT, provider }) => {
         />
         <Route
           path="getHelp"
-          element={<HelpForm dappContract={dappContract} address={address} />}
+          element={
+            <HelpForm
+              dappContract={dappContract}
+              address={address}
+              provider={provider}
+            />
+          }
         />
         <Route path="messages" element={<ChatRoom address={address} />} />
         <Route path="chat" element={<ChatRoom address={address} />} />
-        <Route path="vote" element={<HelpForm />} />
-        <Route path="vote" element={<HelpForm />} />
+        <Route
+          path="vote"
+          element={
+            <HelpForm
+              dappContract={dappContract}
+              address={address}
+              provider={provider}
+            />
+          }
+        />
+        <Route
+          path="vote"
+          element={
+            <HelpForm
+              dappContract={dappContract}
+              address={address}
+              provider={provider}
+            />
+          }
+        />
         <Route
           path="support"
           element={<Support address={address} provider={provider} />}
