@@ -26,8 +26,19 @@ import { NavLogo, NavBtnClick } from '../Navbar/NavbarElements';
 import { Link } from 'react-router-dom';
 
 import './index.scss';
+import { useState } from 'react';
 
 const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
+  const [activePage, setActivePage] = useState(null);
+
+  function handleActive(event) {
+    if (!event.target.classList.value.includes('active')) {
+      event.target.classList.toggle('active');
+      if (activePage) activePage.classList.remove('active');
+      setActivePage(event.target);
+    }
+  }
+
   return (
     <ProSidebar collapsed={collapsed} toggled={toggled} className='box'>
       <SidebarHeader>
@@ -61,17 +72,18 @@ const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
         <Menu>
           <MenuItem
             active={window.location.pathname === '/'}
+            onClick={handleActive}
             icon={<FaTachometerAlt />}
           >
             Dashboard
-            <Link to='/' />
+            <Link to='/' onClick={handleActive} />
           </MenuItem>
           <MenuItem
             active={window.location.pathname === '/helpOthers'}
             icon={<FaHandHoldingHeart />}
           >
             Help Others
-            <Link to='/helpOthers' />
+            <Link to='/helpOthers' onClick={handleActive} />
           </MenuItem>
 
           <MenuItem
@@ -79,35 +91,35 @@ const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
             icon={<FaHeart />}
           >
             Get Help
-            <Link to='/getHelp' />
+            <Link to='/getHelp' onClick={handleActive} />
           </MenuItem>
           <MenuItem
             active={window.location.pathname === '/messages'}
             icon={<FaPaperPlane />}
           >
             Messages
-            <Link to='/messages' />
+            <Link to='/messages' onClick={handleActive} />
           </MenuItem>
           <MenuItem
             active={window.location.pathname === '/chat'}
             icon={<FaRegComments />}
           >
             Chat Room
-            <Link to='/chat' />
+            <Link to='/chat' onClick={handleActive} />
           </MenuItem>
           <MenuItem
             active={window.location.pathname === '/vote'}
             icon={<FaVoteYea />}
           >
             Voting Hub
-            <Link to='/vote' />
+            <Link to='/vote' onClick={handleActive} />
           </MenuItem>
           <MenuItem
             active={window.location.pathname === '/support'}
             icon={<FaHandsHelping />}
           >
             Support Us
-            <Link to='/support' />
+            <Link to='/support' onClick={handleActive} />
           </MenuItem>
         </Menu>
       </SidebarContent>
