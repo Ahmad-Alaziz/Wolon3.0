@@ -35,9 +35,7 @@ export const NavLogo = styled(LinkR)`
   display: flex;
   align-items: center;
   max-width: 120px;
-  border-color: red;
   margin-left: -10px;
-  border-width: 2px;
 `;
 
 export const MobileIcon = styled.div`
@@ -77,6 +75,16 @@ export const NavBtn = styled.nav`
   @media screen and (max-width: 768px) {
     display: none;
   }
+`;
+
+export const NavBtnClick = styled.nav`
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 1rem;
+  height: 100%;
+  cursor: pointer;
 `;
 
 export const NavLinks = styled(LinkS)`

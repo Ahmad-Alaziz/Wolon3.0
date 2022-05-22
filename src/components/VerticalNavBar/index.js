@@ -20,7 +20,7 @@ import {
 import 'react-pro-sidebar/dist/css/styles.css';
 import { WebsiteRights } from '../Footer/FooterElements';
 import { Img } from '../InfoSection/InfoElements';
-import { NavLogo, NavLinks } from '../Navbar/NavbarElements';
+import { NavLogo, NavBtnClick } from '../Navbar/NavbarElements';
 
 import { Link } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ import './index.scss';
 
 const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
   return (
-    <ProSidebar collapsed={collapsed} toggled={toggled}>
+    <ProSidebar collapsed={collapsed} toggled={toggled} className='box'>
       <SidebarHeader>
         <div
           style={{
@@ -51,9 +51,9 @@ const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
               />
             </NavLogo>
           )}
-          <NavLinks onClick={() => handleCollapse(!collapsed)}>
+          <NavBtnClick onClick={() => handleCollapse(!collapsed)}>
             <FaCompress />
-          </NavLinks>
+          </NavBtnClick>
         </div>
       </SidebarHeader>
       <SidebarContent>
