@@ -62,26 +62,26 @@ const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
     try {
       setIsLoading(true);
 
-      if (existingFlow !== false) {
-        const daix = await superfluid.loadSuperToken("fDAIx");
-        const signer = provider.getSigner(0);
-        const deleteFlowOperation = superfluid.cfaV1.deleteFlow({
-          sender: address,
-          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-          superToken: daix.address,
-        });
-        console.log("Deleting your stream...");
+      // if (existingFlow !== false) {
+      //   const daix = await superfluid.loadSuperToken("fDAIx");
+      //   const signer = provider.getSigner(0);
+      //   const deleteFlowOperation = superfluid.cfaV1.deleteFlow({
+      //     sender: address,
+      //     receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+      //     superToken: daix.address,
+      //   });
+      //   console.log("Deleting your stream...");
 
-        const transaction = await deleteFlowOperation.exec(signer);
-        await transaction.wait();
-        console.log(
-          `Congrats - you've just deleted your money stream!
-             Super Token: DAIxF
-             Sender: ${address}
-             Receiver: ${process.env.REACT_APP_CONTRACT_ADDRESS}
-          `
-        );
-      }
+      //   const transaction = await deleteFlowOperation.exec(signer);
+      //   await transaction.wait();
+      //   console.log(
+      //     `Congrats - you've just deleted your money stream!
+      //        Super Token: DAIxF
+      //        Sender: ${address}
+      //        Receiver: ${process.env.REACT_APP_CONTRACT_ADDRESS}
+      //     `
+      //   );
+      // }
 
       const removeAd = await dappContract.removeUserAd();
       await removeAd.wait();
@@ -104,16 +104,16 @@ const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
     }
   };
 
-  useEffect(() => {
-    if (!provider) {
-      setSuperfluid(undefined);
-      return;
-    }
-    SuperfluidFramework.create({
-      chainId: 80001,
-      provider,
-    }).then(setSuperfluid);
-  }, [provider]);
+  // useEffect(() => {
+  //   if (!provider) {
+  //     setSuperfluid(undefined);
+  //     return;
+  //   }
+  //   SuperfluidFramework.create({
+  //     chainId: 80001,
+  //     provider,
+  //   }).then(setSuperfluid);
+  // }, [provider]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -125,35 +125,35 @@ const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
     fetchUserData();
   }, [dappContract]);
 
-  useEffect(() => {
-    if (!superfluid) return;
-    setIsLoading(true);
-    const fetchStream = async () => {
-      const daix = await superfluid.loadSuperToken("fDAIx");
-      const signer = provider.getSigner(0);
-      try {
-        const flow = await superfluid.cfaV1.getFlow({
-          sender: address,
-          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-          superToken: daiTokenContract,
-          providerOrSigner: signer,
-        });
-        if (Number(flow.flowRate) > 0) {
-          console.log(flow);
-          setExistingFlow(flow);
-        }
-      } catch (e) {
-        console.log(e);
-        setExistingFlow(null);
-        setIsLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   if (!superfluid) return;
+  //   setIsLoading(true);
+  //   const fetchStream = async () => {
+  //     const daix = await superfluid.loadSuperToken("fDAIx");
+  //     const signer = provider.getSigner(0);
+  //     try {
+  //       const flow = await superfluid.cfaV1.getFlow({
+  //         sender: address,
+  //         receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+  //         superToken: daiTokenContract,
+  //         providerOrSigner: signer,
+  //       });
+  //       if (Number(flow.flowRate) > 0) {
+  //         console.log(flow);
+  //         setExistingFlow(flow);
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //       setExistingFlow(null);
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    setTimeout(() => {
-      fetchStream();
-      setIsLoading(false);
-    }, 3000);
-  }, []);
+  //   setTimeout(() => {
+  //     fetchStream();
+  //     setIsLoading(false);
+  //   }, 3000);
+  // }, []);
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -225,6 +225,6 @@ const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
       </div>
     </Container>
   );
-};
+};;
 
 export default Dashboard;
