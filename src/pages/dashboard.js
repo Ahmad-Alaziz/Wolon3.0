@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { Container } from '../components/SignIn/SigninElements';
+import { Framework as SuperfluidFramework } from "@superfluid-finance/sdk-core";
+import { Container } from "../components/SignIn/SigninElements";
 import {
   HelpRequestContainer,
   HelpContent,
@@ -8,22 +9,26 @@ import {
   HelpH1,
   HelpImg,
   OnSiteCircle,
-} from '../components/HelpList/HelpListElements';
-import ActivityIndicator from '../components/ActivityIndicator';
-import DashboardBox from '../components/DashboardBox';
-import { FaCoins, FaHandsHelping, FaHeart, FaMoneyBill } from 'react-icons/fa';
+} from "../components/HelpList/HelpListElements";
+import ActivityIndicator from "../components/ActivityIndicator";
+import DashboardBox from "../components/DashboardBox";
+import { FaCoins, FaHandsHelping, FaHeart, FaMoneyBill } from "react-icons/fa";
 
-const Dashboard = ({ dappContract, memberNFT }) => {
+const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
   const [budgetBalance, setBudgetBalance] = useState(null);
   const [helpAd, setHelpAd] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [helperAddress, setHelperAddress] = useState('');
+  const [helperAddress, setHelperAddress] = useState("");
+  const [superfluid, setSuperfluid] = useState(undefined);
+  const [existingFlow, setExistingFlow] = useState(false);
+
+  const daiTokenContract = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
 
   const postHelpAd = async (link) => {
     try {
       const helpAd = await dappContract.addHelpAd(link);
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
@@ -34,7 +39,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         setBudgetBalance(ethers.utils.formatEther(balance));
       }
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
@@ -49,18 +54,40 @@ const Dashboard = ({ dappContract, memberNFT }) => {
           });
       }
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
     }
   };
 
   const removeAd = async () => {
     try {
       setIsLoading(true);
+
+      if (existingFlow !== false) {
+        const daix = await superfluid.loadSuperToken("fDAIx");
+        const signer = provider.getSigner(0);
+        const deleteFlowOperation = superfluid.cfaV1.deleteFlow({
+          sender: address,
+          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+          superToken: daix.address,
+        });
+        console.log("Deleting your stream...");
+
+        const transaction = await deleteFlowOperation.exec(signer);
+        await transaction.wait();
+        console.log(
+          `Congrats - you've just deleted your money stream!
+             Super Token: DAIxF
+             Sender: ${address}
+             Receiver: ${process.env.REACT_APP_CONTRACT_ADDRESS}
+          `
+        );
+      }
+
       const removeAd = await dappContract.removeUserAd();
       await removeAd.wait();
       setIsLoading(false);
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
       setIsLoading(false);
     }
   };
@@ -72,10 +99,21 @@ const Dashboard = ({ dappContract, memberNFT }) => {
       await solved.wait();
       setIsLoading(false);
     } catch (error) {
-      console.warn('Error: ', error);
+      console.warn("Error: ", error);
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!provider) {
+      setSuperfluid(undefined);
+      return;
+    }
+    SuperfluidFramework.create({
+      chainId: 80001,
+      provider,
+    }).then(setSuperfluid);
+  }, [provider]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -87,45 +125,75 @@ const Dashboard = ({ dappContract, memberNFT }) => {
     fetchUserData();
   }, [dappContract]);
 
+  useEffect(() => {
+    if (!superfluid) return;
+    setIsLoading(true);
+    const fetchStream = async () => {
+      const daix = await superfluid.loadSuperToken("fDAIx");
+      const signer = provider.getSigner(0);
+      try {
+        const flow = await superfluid.cfaV1.getFlow({
+          sender: address,
+          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+          superToken: daiTokenContract,
+          providerOrSigner: signer,
+        });
+        if (Number(flow.flowRate) > 0) {
+          console.log(flow);
+          setExistingFlow(flow);
+        }
+      } catch (e) {
+        console.log(e);
+        setExistingFlow(null);
+        setIsLoading(false);
+      }
+    };
+
+    setTimeout(() => {
+      fetchStream();
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
   if (isLoading) {
     return <ActivityIndicator />;
   }
 
   return (
     <Container>
-      <div style={{ color: 'white', marginLeft: '20%', marginTop: '10%' }}>
+      <div style={{ color: "white", marginLeft: "20%", marginTop: "10%" }}>
         <div
           style={{
-            display: 'flex',
+            display: "flex",
             flex: 1,
-            flexDirection: 'row',
-            flexWrap: 'wrap',
+            flexDirection: "row",
+            flexWrap: "wrap",
           }}
         >
           <DashboardBox
             amount={memberNFT.helperTokens}
             icon={<FaCoins />}
-            label='Tokens'
-            unit='WLN Tokens'
+            label="Tokens"
+            unit="WLN Tokens"
           />
           <DashboardBox
             amount={memberNFT.budgetBalance}
             icon={<FaMoneyBill />}
-            label='Total Collected Budget'
-            unit='Matic'
+            label="Total Collected Budget"
+            unit="Matic"
           />
           <DashboardBox
             amount={memberNFT.foundHelp}
             icon={<FaHeart />}
-            label='Help Received'
-            unit='Help'
+            label="Help Received"
+            unit="Help"
           />
 
           <DashboardBox
             amount={0}
             icon={<FaHandsHelping />}
-            label='Total Supported'
-            unit='Matic'
+            label="Total Supported"
+            unit="Matic"
           />
         </div>
 
@@ -135,7 +203,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         ) : (
           <HelpRequestContainer>
             <div>
-              <HelpImg src={require('../images/meta.png')} />
+              <HelpImg src={require("../images/meta.png")} />
             </div>
             <HelpContent>
               <HelpH1>{helpAd.title}</HelpH1>
@@ -147,7 +215,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
             <OnSiteCircle active={!helpAd.isOnline} />
             <button onClick={removeAd}>Remove Ad</button>
             <input
-              type='text'
+              type="text"
               value={helperAddress}
               onChange={(event) => setHelperAddress(event.target.value)}
             />

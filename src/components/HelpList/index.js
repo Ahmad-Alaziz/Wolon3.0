@@ -30,7 +30,7 @@ const HelpList = ({ helpAds }) => {
     setTimeout(() => {
       setFetchedAds([...ads]);
       setIsLoading(false);
-    }, 3000);
+    }, 7000);
   }, [helpAds]);
 
   if (isLoading) {

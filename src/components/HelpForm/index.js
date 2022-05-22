@@ -72,7 +72,6 @@ const HelpForm = ({ dappContract, address, provider }) => {
   const [isValid, setIsValid] = useState(false);
   const [show, setShow] = useState(false);
   const [superfluid, setSuperfluid] = useState(undefined);
-  const [amount, setAmount] = useState("");
   const [existingFlow, setExistingFlow] = useState(false);
 
   const daiTokenContract = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
@@ -90,12 +89,11 @@ const HelpForm = ({ dappContract, address, provider }) => {
         token: process.env.REACT_APP_WEB3_STORAGE,
       });
 
-      const daix = await superfluid.loadSuperToken("fDAIx");
       const signer = provider.getSigner(0);
       const createFlowOperation = superfluid.cfaV1.createFlow({
         sender: address,
         receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-        superToken: daix.address,
+        superToken: daiTokenContract,
         flowRate: 1000,
       });
       const txnResponse = await createFlowOperation.exec(signer);
@@ -156,13 +154,12 @@ const HelpForm = ({ dappContract, address, provider }) => {
     if (!superfluid) return;
     setIsLoading(true);
     const fetchStream = async () => {
-      const daix = await superfluid.loadSuperToken("fDAIx");
       const signer = provider.getSigner(0);
       try {
         const flow = await superfluid.cfaV1.getFlow({
           sender: address,
           receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-          superToken: daix.address,
+          superToken: daiTokenContract,
           providerOrSigner: signer,
         });
         if (Number(flow.flowRate) > 0) {
