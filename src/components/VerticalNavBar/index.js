@@ -5,6 +5,7 @@ import {
   FaPaperPlane,
   FaRegComments,
   FaTachometerAlt,
+  FaHandHoldingHeart,
   FaCompress,
 } from 'react-icons/fa';
 
@@ -66,17 +67,25 @@ const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
             <Link to='/' />
           </MenuItem>
           <MenuItem
-            active={window.location.pathname === '/help'}
-            icon={<FaHeart />}
+            active={window.location.pathname === '/helpOthers'}
+            icon={<FaHandHoldingHeart />}
           >
             Help Others
-            <Link to='/help' />
+            <Link to='/helpOthers' />
+          </MenuItem>
+
+          <MenuItem
+            active={window.location.pathname === '/getHelp'}
+            icon={<FaHeart />}
+          >
+            Get Help
+            <Link to='/getHelp' />
           </MenuItem>
           <MenuItem
             active={window.location.pathname === '/messages'}
             icon={<FaPaperPlane />}
           >
-            messages
+            Messages
             <Link to='/messages' />
           </MenuItem>
           <MenuItem
