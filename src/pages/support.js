@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
 import ActivityIndicator from "../components/ActivityIndicator";
+import { Container } from "../components/ActivityIndicator/ActivityElements";
 
 export const Support = ({ address, provider }) => {
   const [superfluid, setSuperfluid] = useState(undefined);
@@ -113,26 +114,24 @@ export const Support = ({ address, provider }) => {
   return (
     <>
       {existingFlow ? (
-        <>
+        <Container style={{ color: "white" }}>
           <p>You are already supporting us :)</p>
-          <p>
+          <p style={{ marginRight: "10px" }}>
             Current deposit: {ethers.utils.formatEther(existingFlow.deposit)}{" "}
             DAI
           </p>
           <button onClick={deleteFlow}>Stop Stream</button>
-        </>
+        </Container>
       ) : (
-        <button onClick={() => setModalOpen(true)}>
-          Sponsor (create stream)
-        </button>
+        <Container style={{ color: "white" }}>
+          <button onClick={() => setModalOpen(true)}>
+            Sponsor (create stream)
+          </button>
+        </Container>
       )}
       {modalOpen && (
-        <div
-          className="h-full w-full top-0 left-0 absolute bg-[#000000a0] flex justify-center items-center text-black"
-          onClick={() => !isLoading && setModalOpen(false)}
-        >
+        <div onClick={() => !isLoading && setModalOpen(false)}>
           <div
-            className="p-4 bg-white w-96 min-h-80 rounded-xl"
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -141,13 +140,12 @@ export const Support = ({ address, provider }) => {
               <div>Waiting for tx confirmation...</div>
             ) : (
               <>
-                <div className="flex justify-between mb-4 align-center">
-                  <div className="text-gray-400">Open a new stream</div>
+                <div>
+                  <div>Open a new stream</div>
                   <button onClick={() => setModalOpen(false)}>Close</button>
                 </div>
                 <div>
                   <input
-                    className="block w-full py-2 px-4 rounded shadow-inner mb-4 bg-neutral-100"
                     placeholder="fDAIx Amount"
                     type="number"
                     onChange={(e) =>
@@ -156,12 +154,7 @@ export const Support = ({ address, provider }) => {
                       )
                     }
                   />
-                  <button
-                    onClick={createFlow}
-                    className="py-2 px-4 rounded shadow-lg block w-full bg-neutral-100"
-                  >
-                    Open stream
-                  </button>
+                  <button onClick={createFlow}>Open stream</button>
                 </div>
               </>
             )}

@@ -6,6 +6,7 @@
     "@chatscope/chat-ui-kit-react": "^1.8.3",
     "@chatscope/chat-ui-kit-styles": "^1.2.3",
     "@chatscope/use-chat": "^1.4.0",
+    "@epnsproject/frontend-sdk": "^1.5.2",
     "@epnsproject/frontend-sdk-staging": "^1.8.0",
     "@ethersproject/abi": "^5.6.2",
     "@ethersproject/providers": "^5.6.7",
