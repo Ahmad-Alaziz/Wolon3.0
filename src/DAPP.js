@@ -36,7 +36,12 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
       itemsPerPage,
       pageNumber
     );
-    setNotifications(results);
+
+    //parse the notification fetched
+    const parsedResponse = utils.parseApiResponse(results);
+    setNotifications(parsedResponse);
+
+    console.log(parsedResponse);
   };
 
   const subscribeToChannel = async () => {
