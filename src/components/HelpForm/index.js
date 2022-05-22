@@ -72,7 +72,6 @@ const HelpForm = ({ dappContract, address, provider }) => {
   const [isValid, setIsValid] = useState(false);
   const [show, setShow] = useState(false);
   const [superfluid, setSuperfluid] = useState(undefined);
-  const [amount, setAmount] = useState("");
   const [existingFlow, setExistingFlow] = useState(false);
 
   const daiTokenContract = "0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f";
@@ -83,23 +82,22 @@ const HelpForm = ({ dappContract, address, provider }) => {
     setIsLoading(true);
 
     try {
-      if (existingFlow) {
-        throw new Error("You have the stream open");
-      }
+      // if (existingFlow) {
+      //   throw new Error("You have the stream open");
+      // }
       const storage = new Web3Storage({
         token: process.env.REACT_APP_WEB3_STORAGE,
       });
 
-      const daix = await superfluid.loadSuperToken("fDAIx");
-      const signer = provider.getSigner(0);
-      const createFlowOperation = superfluid.cfaV1.createFlow({
-        sender: address,
-        receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-        superToken: daix.address,
-        flowRate: 1000,
-      });
-      const txnResponse = await createFlowOperation.exec(signer);
-      const txnReceipt = await txnResponse.wait();
+      // const signer = provider.getSigner(0);
+      // const createFlowOperation = superfluid.cfaV1.createFlow({
+      //   sender: address,
+      //   receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+      //   superToken: daiTokenContract,
+      //   flowRate: 1000,
+      // });
+      // const txnResponse = await createFlowOperation.exec(signer);
+      // const txnReceipt = await txnResponse.wait();
 
       const helpObject = {
         title: title,
@@ -141,46 +139,45 @@ const HelpForm = ({ dappContract, address, provider }) => {
     }
   };
 
-  useEffect(() => {
-    if (!provider) {
-      setSuperfluid(undefined);
-      return;
-    }
-    SuperfluidFramework.create({
-      chainId: 80001,
-      provider,
-    }).then(setSuperfluid);
-  }, [provider]);
+  // useEffect(() => {
+  //   if (!provider) {
+  //     setSuperfluid(undefined);
+  //     return;
+  //   }
+  //   SuperfluidFramework.create({
+  //     chainId: 80001,
+  //     provider,
+  //   }).then(setSuperfluid);
+  // }, [provider]);
 
-  useEffect(() => {
-    if (!superfluid) return;
-    setIsLoading(true);
-    const fetchStream = async () => {
-      const daix = await superfluid.loadSuperToken("fDAIx");
-      const signer = provider.getSigner(0);
-      try {
-        const flow = await superfluid.cfaV1.getFlow({
-          sender: address,
-          receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
-          superToken: daix.address,
-          providerOrSigner: signer,
-        });
-        if (Number(flow.flowRate) > 0) {
-          console.log(flow);
-          setExistingFlow(flow);
-        }
-      } catch (e) {
-        console.log(e);
-        setExistingFlow(null);
-        setIsLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   if (!superfluid) return;
+  //   setIsLoading(true);
+  //   const fetchStream = async () => {
+  //     const signer = provider.getSigner(0);
+  //     try {
+  //       const flow = await superfluid.cfaV1.getFlow({
+  //         sender: address,
+  //         receiver: process.env.REACT_APP_CONTRACT_ADDRESS,
+  //         superToken: daiTokenContract,
+  //         providerOrSigner: signer,
+  //       });
+  //       if (Number(flow.flowRate) > 0) {
+  //         console.log(flow);
+  //         setExistingFlow(flow);
+  //       }
+  //     } catch (e) {
+  //       console.log(e);
+  //       setExistingFlow(null);
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    setTimeout(() => {
-      fetchStream();
-      setIsLoading(false);
-    }, 3000);
-  }, [address, provider, superfluid]);
+  //   setTimeout(() => {
+  //     fetchStream();
+  //     setIsLoading(false);
+  //   }, 3000);
+  // }, [address, provider, superfluid]);
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -274,6 +271,6 @@ const HelpForm = ({ dappContract, address, provider }) => {
       </FormWrap>
     </Container>
   );
-};
+};;
 
 export default HelpForm;

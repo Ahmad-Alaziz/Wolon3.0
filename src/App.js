@@ -97,14 +97,13 @@ const App = () => {
           />
         ) : (
           <Route
-            path='/*'
+            path="/*"
             element={
               <DAPP
                 dappContract={dappContract}
                 address={address}
                 memberNFT={memberNFT}
                 provider={provider}
-                chainId={chainId}
               />
             }
             exact

@@ -138,6 +138,7 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
               memberNFT={memberNFT}
               setHelpAds={setHelpAds}
               provider={provider}
+              address={address}
             />
           }
         />
