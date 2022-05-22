@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Web3Storage } from "web3.storage";
 import { ethers } from "ethers";
 import SignIn from "../components/SignIn";
 import { Container } from "../components/SignIn/SigninElements";
@@ -19,7 +20,45 @@ const Dashboard = ({ dappContract, memberNFT }) => {
     }
   };
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const storage = new Web3Storage({
+        token: process.env.REACT_APP_WEB3_STORAGE,
+      });
+
+      const helpObject = {
+        title: helpAdTitle,
+        description: helpAdContent,
+        isOnline: helpAdIsOnline,
+        helpAdCategory: helpAdCategory,
+      };
+
+      const blob = new Blob([JSON.stringify(helpObject)], {
+        type: "application/json",
+      });
+      const file = new File([blob], "helpPost.json");
+
+      const cid = await storage.put([file], {
+        onRootCidReady: (localCid) => {
+          console.log(`> 🔑 locally calculated Content ID: ${localCid} `);
+          console.log("> 📡 sending files to web3.storage ");
+        },
+        onStoredChunk: (bytes) =>
+          console.log(
+            `> 🛰 sent ${bytes.toLocaleString()} bytes to web3.storage`
+          ),
+      });
+
+      const helpRequestLink = `${cid}.ipfs.dweb.link/helpPost.json`;
+
+      const addRequest = await dappContract.addHelpAd(helpRequestLink);
+      await addRequest.wait();
+    } catch (error) {
+      console.warn("Error: ", error);
+    }
+  };
 
   useEffect(() => {
     const getBudgetBalance = async () => {
