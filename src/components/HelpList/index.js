@@ -8,6 +8,7 @@ import {
   HelpImg,
   OnSiteCircle,
 } from "./HelpListElements";
+import ActivityIndicator from "../ActivityIndicator";
 
 const mock = [
   {
@@ -32,8 +33,10 @@ const mock = [
 
 const HelpList = ({ helpAds }) => {
   const [fetchedAds, setFetchedAds] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     const ads = [];
     if (helpAds) {
       helpAds.forEach((ad) => {
@@ -47,8 +50,13 @@ const HelpList = ({ helpAds }) => {
 
     setTimeout(() => {
       setFetchedAds([...ads]);
+      setIsLoading(false);
     }, 3000);
   }, [helpAds]);
+
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
   return (
     <Container>
       {fetchedAds &&
