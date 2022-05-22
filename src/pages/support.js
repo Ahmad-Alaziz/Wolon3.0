@@ -112,7 +112,7 @@ export const Support = ({ address, provider }) => {
   }
 
   return (
-    <>
+    <Container style={{ color: "white" }}>
       {existingFlow ? (
         <Container style={{ color: "white" }}>
           <p>You are already supporting us :)</p>
@@ -161,6 +161,6 @@ export const Support = ({ address, provider }) => {
           </div>
         </div>
       )}
-    </>
+    </Container>
   );
 };
