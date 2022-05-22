@@ -48,6 +48,7 @@ const HelpList = ({ helpAds }) => {
               <HelpContent>
                 <HelpH1>{request.title}</HelpH1>
                 <HelpH2>{request.description}</HelpH2>
+                <HelpH2>{request.address}</HelpH2>
                 <p>{request.helpAdCategory}</p>
               </HelpContent>
               <HelpH1>On-Site:</HelpH1>

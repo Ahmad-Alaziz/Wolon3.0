@@ -95,6 +95,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
         <p>Helper Tokens: {memberNFT.helperTokens}</p>
         <p>Found Help: {memberNFT.foundHelp}</p>
         <p>Budget Balance: {budgetBalance}</p>
+        <button onClick={removeAd}>Remove Ad</button>
         {!helpAd ? (
           <p>Go to GetHelp</p>
         ) : (
@@ -105,6 +106,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
             <HelpContent>
               <HelpH1>{helpAd.title}</HelpH1>
               <HelpH2>{helpAd.description}</HelpH2>
+              <HelpH2>{helpAd.address}</HelpH2>
               <p>{helpAd.helpAdCategory}</p>
             </HelpContent>
             <HelpH1>On-Site:</HelpH1>

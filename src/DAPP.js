@@ -55,7 +55,7 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
         />
         <Route
           path="getHelp"
-          element={<HelpForm dappContract={dappContract} />}
+          element={<HelpForm dappContract={dappContract} address={address} />}
         />
         <Route path="messages" element={<Chat />} />
         <Route path="chat" element={<Chat />} />
