@@ -28,26 +28,26 @@ import './index.scss';
 
 const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
   return (
-    <ProSidebar collapsed={collapsed} toggled={toggled} className="box">
+    <ProSidebar collapsed={collapsed} toggled={toggled} className='box'>
       <SidebarHeader>
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "10px",
-            paddingRight: "20px",
+            display: 'flex',
+            flexDirection: 'row',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '10px',
+            paddingRight: '20px',
           }}
         >
           {!collapsed && (
-            <NavLogo to="/dapp">
+            <NavLogo to='/dapp'>
               <Img
-                src={require("../../images/logo-text-white.png")}
-                alt="Logo"
+                src={require('../../images/logo-text-white.png')}
+                alt='Logo'
               />
             </NavLogo>
           )}
@@ -58,36 +58,54 @@ const VerticalNavbar = ({ collapsed, handleCollapse, toggled }) => {
       </SidebarHeader>
       <SidebarContent>
         <Menu>
-          <MenuItem icon={<FaTachometerAlt />}>
+          <MenuItem
+            active={window.location.pathname === '/'}
+            icon={<FaTachometerAlt />}
+          >
             Dashboard
-            <Link to="/" />
+            <Link to='/' />
           </MenuItem>
-          <MenuItem icon={<FaHeart />}>
+          <MenuItem
+            active={window.location.pathname === '/help'}
+            icon={<FaHeart />}
+          >
             Help Others
-            <Link to="/help" />
+            <Link to='/help' />
           </MenuItem>
-          <MenuItem icon={<FaPaperPlane />}>
+          <MenuItem
+            active={window.location.pathname === '/messages'}
+            icon={<FaPaperPlane />}
+          >
             messages
-            <Link to="/messages" />
+            <Link to='/messages' />
           </MenuItem>
-          <MenuItem icon={<FaRegComments />}>
+          <MenuItem
+            active={window.location.pathname === '/chat'}
+            icon={<FaRegComments />}
+          >
             Chat Room
-            <Link to="/chat" />
+            <Link to='/chat' />
           </MenuItem>
-          <MenuItem icon={<FaVoteYea />}>
+          <MenuItem
+            active={window.location.pathname === '/vote'}
+            icon={<FaVoteYea />}
+          >
             Voting Hub
-            <Link to="/vote" />
+            <Link to='/vote' />
           </MenuItem>
-          <MenuItem icon={<FaHandsHelping />}>
+          <MenuItem
+            active={window.location.pathname === '/support'}
+            icon={<FaHandsHelping />}
+          >
             Support Us
-            <Link to="/support" />
+            <Link to='/support' />
           </MenuItem>
         </Menu>
       </SidebarContent>
 
       {!collapsed && (
         <SidebarFooter>
-          <div style={{ margin: "20px" }}>
+          <div style={{ margin: '20px' }}>
             <WebsiteRights>
               Wolon<sup> 3.0</sup> © 2022 All rights reserved.
             </WebsiteRights>

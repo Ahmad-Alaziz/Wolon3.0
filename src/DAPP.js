@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/dashboard";
-import VerticalNavbar from "./components/VerticalNavBar";
-import HelpOthers from "./pages/helpOthers";
+import React, { useState, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Dashboard from './pages/dashboard';
+import VerticalNavbar from './components/VerticalNavBar';
+import HelpOthers from './pages/helpOthers';
 
-import "./App.scss";
+import './App.scss';
+import Chat from './pages/chat';
 
 const DAPP = ({ dappContract, address, memberNFT }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [helpAds, setHelpAds] = useState([]);
+
   const handleCollapsedChange = (checked) => {
     setCollapsed(checked);
   };
@@ -21,7 +23,7 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
           setHelpAds([...adsList]);
         }
       } catch (error) {
-        console.warn("Error: ", error);
+        console.warn('Error: ', error);
       }
     };
 
@@ -47,13 +49,13 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
           }
         />
         <Route
-          path="help"
+          path='help'
           element={<HelpOthers dappContract={dappContract} helpAds={helpAds} />}
         />
-        <Route path="messages" element={<Dashboard />} />
-        <Route path="chat" element={<Dashboard />} />
-        <Route path="vote" element={<Dashboard />} />
-        <Route path="support" element={<Dashboard />} />
+        <Route path='messages' element={<Dashboard />} />
+        <Route path='chat' element={<Chat />} />
+        <Route path='vote' element={<Dashboard />} />
+        <Route path='support' element={<Dashboard />} />
       </Routes>
     </div>
   );
