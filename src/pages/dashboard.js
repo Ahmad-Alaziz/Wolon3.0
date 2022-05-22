@@ -12,7 +12,14 @@ import {
 } from "../components/HelpList/HelpListElements";
 import ActivityIndicator from "../components/ActivityIndicator";
 import DashboardBox from "../components/DashboardBox";
-import { FaCoins, FaHandsHelping, FaHeart, FaMoneyBill } from "react-icons/fa";
+import {
+  FaCoins,
+  FaHandsHelping,
+  FaHeart,
+  FaMoneyBill,
+  FaSchool,
+  FaCar,
+} from "react-icons/fa";
 
 const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
   const [budgetBalance, setBudgetBalance] = useState(null);
@@ -196,20 +203,17 @@ const Dashboard = ({ dappContract, memberNFT, provider, address }) => {
             unit="Matic"
           />
         </div>
-
-        <button onClick={removeAd}>Remove Ad</button>
         {!helpAd ? (
           <div></div>
         ) : (
           <HelpRequestContainer>
-            <div>
-              <HelpImg src={require("../images/meta.png")} />
+            <div style={{ fontSize: "80px", padding: "10px" }}>
+              {helpAd.helpAdCategory === "study" ? <FaSchool /> : <FaCar />}
             </div>
             <HelpContent>
               <HelpH1>{helpAd.title}</HelpH1>
               <HelpH2>{helpAd.description}</HelpH2>
               <HelpH2>{helpAd.address}</HelpH2>
-              <p>{helpAd.helpAdCategory}</p>
             </HelpContent>
             <HelpH1>On-Site:</HelpH1>
             <OnSiteCircle active={!helpAd.isOnline} />

@@ -49,7 +49,7 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
   const subscribeToChannel = async () => {
     //get channel basic info
     const details = await channels.getChannelByAddress(
-      '0xA7a283F1aF418Ca2DBd4d0BE2441d1942aFbf6B8'
+      "0xA7a283F1aF418Ca2DBd4d0BE2441d1942aFbf6B8"
     );
 
     //check if user is subscribed to channel
@@ -58,7 +58,7 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
     if (!isSubscribed) {
       channels.optIn(provider.getSigner(), CHANNEL_ADDRESS, chainId, address, {
         onSuccess: () => {
-          console.log('User optedIn');
+          console.log("User optedIn");
         },
       });
     }
@@ -72,7 +72,7 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
           setHelpAds([...adsList]);
         }
       } catch (error) {
-        console.warn('Error: ', error);
+        console.warn("Error: ", error);
       }
     };
 
@@ -81,38 +81,37 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
     fetchNotifications();
   }, [dappContract]);
 
-  useEffect(() => {
-    if (address) {
-      // 'your connected wallet address'
-      EmbedSDK.init({
-        headerText: 'Hello DeFi', // optional
-        targetID: 'sdk-trigger-id', // mandatory
-        appName: 'consumerApp', // mandatory
-        user: address, // mandatory
-        viewOptions: {
-          type: 'sidebar', // optional [default: 'sidebar', 'modal']
-          showUnreadIndicator: true, // optional
-          unreadIndicatorColor: '#cc1919',
-          unreadIndicatorPosition: 'bottom-right',
-        },
-        theme: 'light',
-        onOpen: () => {
-          console.log('-> client dApp onOpen callback');
-        },
-        onClose: () => {
-          console.log('-> client dApp onClose callback');
-        },
-      });
-    }
+  // useEffect(() => {
+  //   if (address) {
+  //     // 'your connected wallet address'
+  //     EmbedSDK.init({
+  //       headerText: "Hello DeFi", // optional
+  //       targetID: "sdk-trigger-id", // mandatory
+  //       appName: "Wolon 3.0", // mandatory
+  //       user: address, // mandatory
+  //       viewOptions: {
+  //         type: "sidebar", // optional [default: 'sidebar', 'modal']
+  //         showUnreadIndicator: true, // optional
+  //         unreadIndicatorColor: "#cc1919",
+  //         unreadIndicatorPosition: "bottom-right",
+  //       },
+  //       theme: "light",
+  //       onOpen: () => {
+  //         console.log("-> client dApp onOpen callback");
+  //       },
+  //       onClose: () => {
+  //         console.log("-> client dApp onClose callback");
+  //       },
+  //     });
+  //   }
 
-    return () => {
-      EmbedSDK.cleanup();
-    };
-  }, []);
+  //   return () => {
+  //     EmbedSDK.cleanup();
+  //   };
+  // }, []);
 
   return (
     <div className={`app`}>
-      <button id='sdk-trigger-id'>trigger button</button>
       {notifications.map((oneNotification) => (
         <NotificationItem
           notificationTitle={oneNotification.title}
@@ -129,6 +128,8 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
         toggled={true}
         handleCollapse={handleCollapsedChange}
       />
+
+      {/* <button id="sdk-trigger-id">trigger button</button> */}
       <Routes>
         <Route
           index
@@ -143,11 +144,11 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
           }
         />
         <Route
-          path='helpOthers'
+          path="helpOthers"
           element={<HelpOthers dappContract={dappContract} helpAds={helpAds} />}
         />
         <Route
-          path='getHelp'
+          path="getHelp"
           element={
             <HelpForm
               dappContract={dappContract}
@@ -156,20 +157,10 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
             />
           }
         />
-        <Route path='messages' element={<ChatRoom address={address} />} />
-        <Route path='chat' element={<ChatRoom address={address} />} />
+        <Route path="messages" element={<ChatRoom address={address} />} />
+        <Route path="chat" element={<ChatRoom address={address} />} />
         <Route
-          path='vote'
-          element={
-            <HelpForm
-              dappContract={dappContract}
-              address={address}
-              provider={provider}
-            />
-          }
-        />
-        <Route
-          path='vote'
+          path="vote"
           element={
             <HelpForm
               dappContract={dappContract}
@@ -179,7 +170,17 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
           }
         />
         <Route
-          path='support'
+          path="vote"
+          element={
+            <HelpForm
+              dappContract={dappContract}
+              address={address}
+              provider={provider}
+            />
+          }
+        />
+        <Route
+          path="support"
           element={<Support address={address} provider={provider} />}
         />
       </Routes>

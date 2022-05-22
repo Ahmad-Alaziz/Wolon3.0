@@ -9,7 +9,7 @@ import {
   OnSiteCircle,
 } from "./HelpListElements";
 import ActivityIndicator from "../ActivityIndicator";
-import { FaCarCrash, FaSchool } from "react-icons/fa";
+import { FaCar, FaSchool } from "react-icons/fa";
 
 const HelpList = ({ helpAds }) => {
   const [fetchedAds, setFetchedAds] = useState([]);
@@ -44,12 +44,8 @@ const HelpList = ({ helpAds }) => {
         fetchedAds.map((request, index) => {
           return (
             <HelpRequestContainer key={index}>
-              <div>
-                {request.helpAdCategory === "study" ? (
-                  <FaSchool />
-                ) : (
-                  <FaCarCrash />
-                )}
+              <div style={{ fontSize: "80px", padding: "10px" }}>
+                {request.helpAdCategory === "study" ? <FaSchool /> : <FaCar />}
               </div>
               <HelpContent>
                 <HelpH1>{request.title}</HelpH1>
