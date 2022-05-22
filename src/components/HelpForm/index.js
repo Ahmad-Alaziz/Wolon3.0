@@ -62,12 +62,13 @@ const customStyles = {
 
 const HelpForm = ({ dappContract }) => {
   const [isInPerson, setIsInPerson] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [category, setCategory] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const [show, setShow] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -108,8 +109,13 @@ const HelpForm = ({ dappContract }) => {
       await addRequest.wait();
     } catch (error) {
       console.warn('Error: ', error);
+
+      setIsValid(false);
+      setShow(true);
     }
     setIsLoading(false);
+    setIsValid(true);
+    setShow(true);
   };
 
   if (isLoading) {
@@ -130,7 +136,7 @@ const HelpForm = ({ dappContract }) => {
             }}
           >
             {isValid ? (
-              <Alert variant='success' dismissible>
+              <Alert show={show} variant='success' dismissible>
                 <Alert.Heading>Success!</Alert.Heading>
                 <p>Your help request has been published successfully!</p>
                 <hr />
@@ -140,9 +146,17 @@ const HelpForm = ({ dappContract }) => {
                   the Advert and cancel the subscription at any point and you
                   won't have to pay for any second more than you need!
                 </p>
+                <div className='d-flex justify-content-end'>
+                  <button
+                    onClick={() => setShow(false)}
+                    variant='outline-success'
+                  >
+                    Close me y'all!
+                  </button>
+                </div>
               </Alert>
             ) : (
-              <Alert variant='danger'>
+              <Alert show={show} variant='danger'>
                 <Alert.Heading>Oh Snap!</Alert.Heading>
                 <p>It seems like something went wrong :/</p>
                 <hr />
@@ -150,6 +164,14 @@ const HelpForm = ({ dappContract }) => {
                   If you already have a running Advert you need to cancel it
                   first. You can only have one Advert running at a time.
                 </p>
+                <div className='d-flex justify-content-end'>
+                  <button
+                    onClick={() => setShow(false)}
+                    variant='outline-success'
+                  >
+                    Close me y'all!
+                  </button>
+                </div>
               </Alert>
             )}
           </div>
