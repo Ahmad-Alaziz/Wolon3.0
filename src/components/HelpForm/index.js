@@ -146,12 +146,12 @@ const HelpForm = ({ dappContract, address }) => {
             >
               <Alert.Heading>Success!</Alert.Heading>
               <p>Your help request has been published successfully!</p>
+              <p>It might take a few minutes to appear on your dashboard.</p>
               <hr />
               <p className='mb-0'>
-                You have opened a continious cashflow that will be sending money
+                You have opened a continuous cashflow that will be sending money
                 as long as your Advert is being shown, you can delete the Advert
-                and cancel the subscription at any point and you won't have to
-                pay for any second more than you need!
+                and cancel the subscription at any point.
               </p>
             </Alert>
 

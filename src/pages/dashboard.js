@@ -131,7 +131,7 @@ const Dashboard = ({ dappContract, memberNFT }) => {
 
         <button onClick={removeAd}>Remove Ad</button>
         {!helpAd ? (
-          <p>Go to GetHelp</p>
+          <div></div>
         ) : (
           <HelpRequestContainer>
             <div>

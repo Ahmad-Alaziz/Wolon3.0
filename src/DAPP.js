@@ -5,8 +5,8 @@ import VerticalNavbar from './components/VerticalNavBar';
 import HelpOthers from './pages/helpOthers';
 
 import './App.scss';
-import Chat from './pages/chat';
 import HelpForm from './components/HelpForm';
+import { ChatRoom } from './pages/chatRoom';
 
 const DAPP = ({ dappContract, address, memberNFT }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -50,17 +50,17 @@ const DAPP = ({ dappContract, address, memberNFT }) => {
           }
         />
         <Route
-          path="helpOthers"
+          path='helpOthers'
           element={<HelpOthers dappContract={dappContract} helpAds={helpAds} />}
         />
         <Route
-          path="getHelp"
+          path='getHelp'
           element={<HelpForm dappContract={dappContract} address={address} />}
         />
-        <Route path="messages" element={<Chat />} />
-        <Route path="chat" element={<Chat />} />
-        <Route path="vote" element={<HelpForm />} />
-        <Route path="support" element={<Chat />} />
+        <Route path='messages' element={<ChatRoom />} />
+        <Route path='chat' element={<ChatRoom />} />
+        <Route path='vote' element={<HelpForm />} />
+        <Route path='support' element={<ChatRoom />} />
       </Routes>
     </div>
   );
