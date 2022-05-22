@@ -33,11 +33,11 @@ const mock = [
 const HelpList = () => {
   return (
     <Container>
-      {mock.map((request) => {
+      {mock.map((request, index) => {
         return (
-          <HelpRequestContainer>
+          <HelpRequestContainer key={index}>
             <div>
-              <HelpImg src={require('../../images/meta.png')} />
+              <HelpImg src={require("../../images/meta.png")} />
             </div>
             <HelpContent>
               <HelpH1>{request.address}</HelpH1>

@@ -105,6 +105,7 @@ const App = () => {
                 memberNFT={memberNFT}
               />
             }
+            exact
           />
         )}
       </Routes>
