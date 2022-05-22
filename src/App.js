@@ -83,7 +83,7 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        {memberNFT ? (
+        {!memberNFT ? (
           <Route
             index
             element={
