@@ -59,8 +59,8 @@ const customStyles = {
 
 const HelpForm = ({ dappContract }) => {
   const [isInPerson, setIsInPerson] = useState(false);
-  const [title, setTitle] = useState(false);
-  const [description, setDescription] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [category, setCategory] = useState(false);
 
   const handleSubmit = async (event) => {
