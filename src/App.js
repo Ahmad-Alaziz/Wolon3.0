@@ -83,18 +83,30 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          index
-          element={
-            <Home
-              dappContract={dappContract}
-              connect={connect}
-              address={address}
-            />
-          }
-          exact
-        />
-        <Route path="dapp/*" element={<DAPP />} />
+        {!memberNFT ? (
+          <Route
+            index
+            element={
+              <Home
+                dappContract={dappContract}
+                connect={connect}
+                address={address}
+              />
+            }
+            exact
+          />
+        ) : (
+          <Route
+            path="/*"
+            element={
+              <DAPP
+                dappContract={dappContract}
+                address={address}
+                memberNFT={memberNFT}
+              />
+            }
+          />
+        )}
       </Routes>
     </Router>
   );
