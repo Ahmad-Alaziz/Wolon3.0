@@ -3,6 +3,14 @@ import { Web3Storage } from "web3.storage";
 import { ethers } from "ethers";
 import SignIn from "../components/SignIn";
 import { Container } from "../components/SignIn/SigninElements";
+import {
+  HelpRequestContainer,
+  HelpContent,
+  HelpH2,
+  HelpH1,
+  HelpImg,
+  OnSiteCircle,
+} from "../components/HelpList/HelpListElements";
 
 const Dashboard = ({ dappContract, memberNFT }) => {
   const [budgetBalance, setBudgetBalance] = useState(null);
@@ -76,7 +84,11 @@ const Dashboard = ({ dappContract, memberNFT }) => {
       try {
         const userAd = await dappContract.getUserAd();
         if (userAd) {
-          setHelpAd(userAd);
+          fetch(`https://${userAd}`)
+            .then((res) => res.json())
+            .then((data) => {
+              setHelpAd(data);
+            });
         }
       } catch (error) {
         console.warn("Error: ", error);
@@ -152,7 +164,18 @@ const Dashboard = ({ dappContract, memberNFT }) => {
             </form>
           </div>
         ) : (
-          <p>Your helpAd</p>
+          <HelpRequestContainer>
+            <div>
+              <HelpImg src={require("../images/meta.png")} />
+            </div>
+            <HelpContent>
+              <HelpH1>{helpAd.title}</HelpH1>
+              <HelpH2>{helpAd.description}</HelpH2>
+              <p>{helpAd.helpAdCategory}</p>
+            </HelpContent>
+            <HelpH1>On-Site:</HelpH1>
+            <OnSiteCircle active={helpAd.isOnline} />
+          </HelpRequestContainer>
         )}
       </div>
     </Container>
