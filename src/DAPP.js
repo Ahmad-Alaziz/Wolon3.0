@@ -7,6 +7,8 @@ import {
   channels,
 } from '@epnsproject/frontend-sdk';
 
+import { EmbedSDK } from '@epnsproject/frontend-sdk-staging';
+
 import Dashboard from './pages/dashboard';
 import VerticalNavbar from './components/VerticalNavBar';
 import HelpOthers from './pages/helpOthers';
@@ -79,8 +81,38 @@ const DAPP = ({ dappContract, address, memberNFT, provider, chainId }) => {
     fetchNotifications();
   }, [dappContract]);
 
+  useEffect(() => {
+    if (address) {
+      // 'your connected wallet address'
+      EmbedSDK.init({
+        headerText: 'Hello DeFi', // optional
+        targetID: 'sdk-trigger-id', // mandatory
+        appName: 'consumerApp', // mandatory
+        user: address, // mandatory
+        viewOptions: {
+          type: 'sidebar', // optional [default: 'sidebar', 'modal']
+          showUnreadIndicator: true, // optional
+          unreadIndicatorColor: '#cc1919',
+          unreadIndicatorPosition: 'bottom-right',
+        },
+        theme: 'light',
+        onOpen: () => {
+          console.log('-> client dApp onOpen callback');
+        },
+        onClose: () => {
+          console.log('-> client dApp onClose callback');
+        },
+      });
+    }
+
+    return () => {
+      EmbedSDK.cleanup();
+    };
+  }, []);
+
   return (
     <div className={`app`}>
+      <button id='sdk-trigger-id'>trigger button</button>
       {notifications.map((oneNotification) => (
         <NotificationItem
           notificationTitle={oneNotification.title}
