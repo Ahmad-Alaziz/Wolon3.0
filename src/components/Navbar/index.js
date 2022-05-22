@@ -27,7 +27,7 @@ const Navbar = ({ toggle, connect, address }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', changeNav);
+    window.addEventListener("scroll", changeNav);
   }, []);
 
   const toggleHome = () => {
@@ -36,13 +36,13 @@ const Navbar = ({ toggle, connect, address }) => {
 
   return (
     <>
-      <IconContext.Provider value={{ color: '#fff' }}>
+      <IconContext.Provider value={{ color: "#fff" }}>
         <Nav scrollNav={scrollNav}>
           <NavbarContainer>
-            <NavLogo onClick={toggleHome} to='/'>
+            <NavLogo onClick={toggleHome} to="/">
               <Img
-                src={require('../../images/logo-text-white.png')}
-                alt='Logo'
+                src={require("../../images/logo-text-white.png")}
+                alt="Logo"
               />
             </NavLogo>
             <MobileIcon onClick={toggle}>
@@ -51,11 +51,11 @@ const Navbar = ({ toggle, connect, address }) => {
             <NavMenu>
               <NavItem>
                 <NavLinks
-                  to='about'
+                  to="about"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   About
@@ -63,11 +63,11 @@ const Navbar = ({ toggle, connect, address }) => {
               </NavItem>
               <NavItem>
                 <NavLinks
-                  to='discover'
+                  to="discover"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Discover
@@ -75,11 +75,11 @@ const Navbar = ({ toggle, connect, address }) => {
               </NavItem>
               <NavItem>
                 <NavLinks
-                  to='services'
+                  to="services"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Services
@@ -87,11 +87,11 @@ const Navbar = ({ toggle, connect, address }) => {
               </NavItem>
               <NavItem>
                 <NavLinks
-                  to='signup'
+                  to="signup"
                   smooth={true}
                   duration={500}
                   spy={true}
-                  exact='true'
+                  exact="true"
                   offset={-80}
                 >
                   Sign Up
@@ -105,7 +105,7 @@ const Navbar = ({ toggle, connect, address }) => {
                   4
                 )}...${address.slice(38, 42)}`}</MetaMaskbtn>
               ) : (
-                <MetaMaskbtn>Connect to MetaMask</MetaMaskbtn>
+                <MetaMaskbtn>Connect Wallet</MetaMaskbtn>
               )}
             </NavBtn>
           </NavbarContainer>
