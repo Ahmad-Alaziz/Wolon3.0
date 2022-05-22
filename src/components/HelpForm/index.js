@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Web3Storage } from 'web3.storage';
 import 'react-toggle/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Alert from 'react-bootstrap/Alert';
 
 import {
   Container,
@@ -16,6 +18,8 @@ import {
 } from './HelpFormElements';
 
 import Toggle from 'react-toggle';
+import ActivityIndicator from '../ActivityIndicator';
+import { Button } from 'semantic-ui-react';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -59,12 +63,18 @@ const customStyles = {
 
 const HelpForm = ({ dappContract, address }) => {
   const [isInPerson, setIsInPerson] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState(false);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState(options[0]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+  const [show, setShow] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setIsLoading(true);
 
     try {
       const storage = new Web3Storage({
@@ -99,15 +109,64 @@ const HelpForm = ({ dappContract, address }) => {
 
       const addRequest = await dappContract.addHelpAd(helpRequestLink);
       await addRequest.wait();
+      setIsLoading(false);
+      setIsValid(true);
+      setShow(true);
     } catch (error) {
-      console.warn("Error: ", error);
+      console.warn('Error: ', error);
+
+      setIsLoading(false);
+      setIsValid(false);
+      setShow(true);
     }
   };
 
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
   return (
     <Container>
       <FormWrap>
         <FormContent>
+          <div
+            style={{
+              width: '300px',
+              alignSelf: 'center',
+              position: 'absolute',
+              zIndex: 10000,
+              left: 'auto',
+              top: 'auto',
+            }}
+          >
+            <Alert show={show && isValid} variant='success' dismissible>
+              <div className='d-flex justify-content-end'>
+                <Button onClick={() => setShow(false)}>X</Button>
+              </div>
+              <Alert.Heading>Success!</Alert.Heading>
+              <p>Your help request has been published successfully!</p>
+              <hr />
+              <p className='mb-0'>
+                You have opened a continious cashflow that will be sending money
+                as long as your Advert is being shown, you can delete the Advert
+                and cancel the subscription at any point and you won't have to
+                pay for any second more than you need!
+              </p>
+            </Alert>
+
+            <Alert show={show && !isValid} variant='danger'>
+              <div className='d-flex justify-content-end'>
+                <Button onClick={() => setShow(false)}>X</Button>
+              </div>
+              <Alert.Heading>Oh Snap!</Alert.Heading>
+              <p>It seems like something went wrong :/</p>
+              <hr />
+              <p className='mb-0'>
+                If you already have a running Advert you need to cancel it
+                first. You can only have one Advert running at a time.
+              </p>
+            </Alert>
+          </div>
+
           <Form onSubmit={handleSubmit}>
             <FormH1>Create a Help Request</FormH1>
             <FormLabel htmlFor="for">Category</FormLabel>
