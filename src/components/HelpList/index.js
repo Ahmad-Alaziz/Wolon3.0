@@ -10,27 +10,6 @@ import {
 } from "./HelpListElements";
 import ActivityIndicator from "../ActivityIndicator";
 
-const mock = [
-  {
-    address: "0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8",
-    description:
-      "Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad",
-    onSite: true,
-  },
-  {
-    address: "0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8",
-    description:
-      "Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad",
-    onSite: false,
-  },
-  {
-    address: "0xA7a283F1aF418Ca2Ddd4f0BE2441d1942aFbf6B8",
-    description:
-      "Lorem sandk ksjadkjashd kjasndkjhasd akjshdkjahs dkjhaskd akjshdkjashdkj ajkshdkjahsd jkhask dhskjad",
-    onSite: false,
-  },
-];
-
 const HelpList = ({ helpAds }) => {
   const [fetchedAds, setFetchedAds] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +51,7 @@ const HelpList = ({ helpAds }) => {
                 <p>{request.helpAdCategory}</p>
               </HelpContent>
               <HelpH1>On-Site:</HelpH1>
-              <OnSiteCircle active={request.isOnline} />
+              <OnSiteCircle active={!request.isOnline} />
             </HelpRequestContainer>
           );
         })}
