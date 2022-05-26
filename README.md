@@ -38,7 +38,7 @@
 </br>
 
 ## About The Project
-Wolon3.0 is a multi award winning hackathon project developed by Ahmad Alaziz and [Pawel Kowalewski](https://github.com/KowalewskiPawel), The webapp is incomplete and requires a lot of polishing up; however it goes to represent a possible solution for a sustainable decentralzied ecosystem for exchanging services.
+Wolon3.0 is a multi award winning hackathon project developed by [Ahmad Alaziz](https://github.com/Ahmad-Alaziz) and [Pawel Kowalewski](https://github.com/KowalewskiPawel), The webapp is incomplete and requires a lot of polishing up; however it goes to represent a possible solution for a sustainable decentralzied ecosystem for exchanging services.
 
 ## Idea
 Help-Seekers pay for posted help-request adverts by susbscribing to a continious cashflow that transfers money per-second, meaning the seekers don't have to pay for a second more than what they need. The money collected from the help-seekers will be controlled by the volunteers (Help-Givers). Volunteers earn tokens in exchange for help services. Tokens grant volunteers more voting power, on how the money should be distributed, and more money when the distribution occurs. Supporters can support our cause by also opening up a continious cashflow stream into the general balance.
