@@ -34,17 +34,9 @@
     <br />
     </p>
 </p>
-<p align="center">
-  <a href="#about-the-project">About The Project</a> •
-  <a href="#idea">The Idea</a> •
-  <a href="#technology">Technology</a> •
-</p>  
+</br>
+</br>
 
-<p align="center">
-  
-![screenshot](img/clip.gif)
-</p>                                                                                                                             
-                                                                                                                                                      
 ## About The Project
 Wolon3.0 is a multi award winning hackathon project developed by Ahmad Alaziz and Pawel Kowalewski, The webapp is incomplete and requires a lot of polishing up; however it goes to represent a possible solution for a sustainable decentralzied ecosystem for exchanging services.
 
