@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+<h3 >
+  FrontEnd
+</h3>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
 
-## Available Scripts
+<div align="right">
+<h3 >
+  Web3
+</h3>
 
-In the project directory, you can run:
+![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white)
+![SuperFluid](https://img.shields.io/badge/-SuperFluid-orange?style=for-the-badge)
+![EPNS](https://img.shields.io/badge/-EPNS-blue?style=for-the-badge)
+![WorldCoin](https://img.shields.io/badge/-WorldCoin-grey?style=for-the-badge)
+![IPFS](https://img.shields.io/badge/-IPFS%2FFilecoin-green?style=for-the-badge)
+![Waku](https://img.shields.io/badge/-Waku-yellow?style=for-the-badge)
+![WalletConnect](https://img.shields.io/badge/-WalletConnect-black?style=for-the-badge)
 
-### `npm start`
+</div>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<!-- LOGO -->
+<br />
+<h1>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/72296822/170457080-74bd0f66-89f7-4238-b4a5-0296c6bec26d.png" width="150" height="150">
+  <br>Wolon 3.0
+</h1>
+  <p align="center">
+    The web3 decentralized ecosystem where volunteers and help seekers meet.
+    <br />
+    </p>
+</p>
+<p align="center">
+  <a href="#about-the-project">About The Project</a> •
+  <a href="#idea">The Idea</a> •
+  <a href="#technology">Technology</a> •
+</p>  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<p align="center">
+  
+![screenshot](img/clip.gif)
+</p>                                                                                                                             
+                                                                                                                                                      
+## About The Project
+Wolon3.0 is a multi award winning hackathon project developed by Ahmad Alaziz and Pawel Kowalewski, The webapp is incomplete and requires a lot of polishing up; however it goes to represent a possible solution for a sustainable decentralzied ecosystem for exchanging services.
 
-### `npm test`
+## Idea
+Help-Seekers pay for posted help-request adverts by susbscribing to a continious cashflow that transfers money per-second, meaning the seekers don't have to pay for a second more than what they need. The money collected from the help-seekers will be controlled by the volunteers (Help-Givers). Volunteers earn tokens in exchange for help services. Tokens grant volunteers more voting power, on how the money should be distributed, and more money when the distribution occurs. Supporters can support our cause by also opening up a continious cashflow stream into the general balance.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Volunteers can also vote to give money to charities.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Technology
+[SmartContract](https://github.com/KowalewskiPawel/WolonSmart/blob/main/contracts/Wolon.sol)
+<br/>
+The app is build with the use of Hardhat and Solidity, on the side of the smart contract. We have used several extra libraries in our smart contract. Frontend is built in React, we use WalletConnect to connect the wallets, Worldcoin for users authentication, and we store the messages with Web3 Storage as a JSON files, that are added to the contract. Moreover, users can communicate via WakuConnect chat, and get notifications with EPNS. To keep the ad live, users have to open money streams with Superfluid, which is also used as a part of sending support to our app.
